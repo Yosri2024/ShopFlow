@@ -1,0 +1,26 @@
+{
+  "info": { "name": "ShopFlow", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "item": [
+    { "name": "Auth - Register", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{base}}/api/auth/register", "body": { "mode": "raw", "raw": "{\"email\":\"test@test.com\",\"password\":\"Password123!\",\"prenom\":\"Test\",\"nom\":\"User\"}" } } },
+    { "name": "Auth - Register SELLER", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{base}}/api/auth/register", "body": { "mode": "raw", "raw": "{\"email\":\"seller@test.com\",\"password\":\"Password123!\",\"prenom\":\"Ali\",\"nom\":\"Seller\",\"role\":\"SELLER\",\"nomBoutique\":\"ShopAli\"}" } } },
+    { "name": "Auth - Login", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{base}}/api/auth/login", "body": { "mode": "raw", "raw": "{\"email\":\"test@test.com\",\"password\":\"Password123!\"}" } } },
+    { "name": "Auth - Refresh", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "url": "{{base}}/api/auth/refresh", "body": { "mode": "raw", "raw": "{\"refreshToken\":\"{{refreshToken}}\"}" } } },
+    { "name": "Categories - Tree", "request": { "method": "GET", "url": "{{base}}/api/categories" } },
+    { "name": "Categories - Create", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/categories", "body": { "mode": "raw", "raw": "{\"nom\":\"Electronics\",\"description\":\"Tech\"}" } } },
+    { "name": "Products - List paginated", "request": { "method": "GET", "url": "{{base}}/api/products?page=0&size=10&sort=dateCreation,desc" } },
+    { "name": "Products - Search", "request": { "method": "GET", "url": "{{base}}/api/products/search?q=Phone" } },
+    { "name": "Products - Top Selling", "request": { "method": "GET", "url": "{{base}}/api/products/top-selling" } },
+    { "name": "Products - Create", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/products?sellerId=1", "body": { "mode": "raw", "raw": "{\"nom\":\"Phone X\",\"description\":\"Smartphone\",\"prix\":699.99,\"stock\":10,\"categoryIds\":[1],\"images\":[\"https://example.com/phone.jpg\"]}" } } },
+    { "name": "Products - Get By Id", "request": { "method": "GET", "url": "{{base}}/api/products/1" } },
+    { "name": "Cart - Get", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/cart" } },
+    { "name": "Cart - Add Item", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/cart/items", "body": { "mode": "raw", "raw": "{\"productId\":1,\"quantite\":2}" } } },
+    { "name": "Cart - Apply Coupon", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/cart/coupon", "body": { "mode": "raw", "raw": "{\"code\":\"PROMO10\"}" } } },
+    { "name": "Orders - Create", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/orders", "body": { "mode": "raw", "raw": "{\"adresseLivraison\":\"123 Rue Tunis\"}" } } },
+    { "name": "Orders - My", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/orders/my" } },
+    { "name": "Orders - Cancel", "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/orders/1/cancel" } },
+    { "name": "Reviews - Create", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/reviews", "body": { "mode": "raw", "raw": "{\"productId\":1,\"note\":5,\"commentaire\":\"Top produit\"}" } } },
+    { "name": "Coupons - Create", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/coupons", "body": { "mode": "raw", "raw": "{\"code\":\"PROMO10\",\"type\":\"PERCENT\",\"valeur\":10,\"dateExpiration\":\"2026-12-31\",\"usagesMax\":100,\"actif\":true}" } } },
+    { "name": "Dashboard - Admin", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{accessToken}}" }], "url": "{{base}}/api/dashboard/admin" } }
+  ],
+  "variable": [{ "key": "base", "value": "http://localhost:8080" }, { "key": "accessToken", "value": "" }, { "key": "refreshToken", "value": "" }]
+}

@@ -1,0 +1,95 @@
+server:
+  port: 8080
+
+spring:
+  # --- Profil par défaut = dev (H2) ---
+  profiles:
+    active: dev
+
+  # JPA - Jakarta Persistence 3 (Spec 3.1)
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+
+  # H2 en mémoire pour dev/test (Spec 3.1)
+  datasource:
+    url: jdbc:h2:mem:shopflow;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+
+# --- Swagger / Springdoc (Spec 3.1 : /swagger-ui) ---
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+# --- JWT (Spec 3.1 : access + refresh) ---
+app:
+  jwt:
+    # En prod, mets cette clé en variable env JWT_SECRET (256 bits minimum)
+    secret: 5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437
+    expiration-ms: 3600000        # 1h access token
+    refresh-expiration-ms: 604800000  # 7j refresh token
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.example: DEBUG
+
+---
+# Profil DEV - H2 (par défaut, pas besoin de docker)
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2:mem:shopflow;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+---
+# Profil PROD - PostgreSQL (Spec 3.1 production)
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shopflow
+    driver-class-name: org.postgresql.Driver
+    username: ${DB_USERNAME:shopflow}
+    password: ${DB_PASSWORD:shopflow}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # Désactive H2 en prod
+  h2:
+    console:
+      enabled: false
