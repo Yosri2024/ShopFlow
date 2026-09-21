@@ -19,19 +19,25 @@ export default function Home() {
 
   return (
     <div>
-      {/* Bannière promo */}
-      <div className="bg-gradient-to-r from-black to-zinc-800 text-white py-12 px-6 text-center">
-        <h1 className="text-4xl font-bold mb-2">ShopFlow</h1>
-        <p className="text-zinc-300">Marketplace B2C - Produits en vedette</p>
-        <a href="/products" className="inline-block mt-4 bg-white text-black px-6 py-2 rounded-full font-medium">Voir catalogue</a>
+      {/* Bannière pro */}
+      <div className="bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-600 text-white py-14 px-6 text-center">
+        <h1 className="text-4xl font-extrabold tracking-tight mb-2">ShopFlow — La boutique pro</h1>
+        <p className="text-indigo-100">Marketplace B2C • Livraison 24h • PROMO -20% avec PROMO10</p>
+        <a href="/products" className="inline-block mt-5 bg-white text-indigo-700 px-7 py-2.5 rounded-full font-bold shadow hover:bg-zinc-50">Voir catalogue →</a>
       </div>
 
-      {/* Catégories */}
+      {/* Catégories pro */}
       <div className="max-w-6xl mx-auto px-6 py-6 flex gap-2 flex-wrap">
-        {cats.map(c => (
-          <a key={c.id} href={`/products?categorie=${c.id}`} className="px-3 py-1 bg-white border rounded-full text-sm hover:bg-black hover:text-white">{c.nom}</a>
-        ))}
-        {cats.length===0 && <span className="text-zinc-400 text-sm">Aucune catégorie — crée-en via API</span>}
+        {cats.map(c => {
+          const isElec = c.nom.toLowerCase().includes("electro");
+          return (
+            <a key={c.id} href={`/products?categorie=${c.id}`}
+               className={`px-4 py-1.5 rounded-full text-sm font-medium border shadow-sm transition ${isElec ? "bg-indigo-600 text-white border-indigo-600 hover:bg-indigo-700" : "bg-emerald-500 text-white border-emerald-500 hover:bg-emerald-600"}`}>
+              {c.nom}
+            </a>
+          );
+        })}
+        {cats.length===0 && <span className="text-zinc-400 text-sm">Aucune catégorie</span>}
       </div>
 
       {/* Produits vedette */}

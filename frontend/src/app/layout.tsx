@@ -8,7 +8,7 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   title: "ShopFlow - Boutique en ligne",
-  description: "Mini projet ShopFlow Spring Boot + Next.js - Ghada Feki",
+  description: "Mini projet ShopFlow Spring Boot + Next.js - yosri",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full flex flex-col bg-zinc-50 dark:bg-black">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <footer className="border-t py-4 text-center text-sm text-zinc-500">ShopFlow © 2026 - Ghada Feki</footer>
+        <footer className="border-t py-4 text-center text-sm text-zinc-500">ShopFlow © 2026 - yosri</footer>
       </body>
     </html>
   );

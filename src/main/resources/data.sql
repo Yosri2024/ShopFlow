@@ -27,29 +27,49 @@ INSERT INTO category (nom, description, parent_id) VALUES
 ('Smartphones', 'Téléphones intelligents', 1),
 ('Laptops', 'Ordinateurs portables', 1);
 
--- Produits (seller_id = 2)
+-- Produits (seller_id = 2) — 9 produits pro
 INSERT INTO product (seller_id, nom, description, prix, prix_promo, stock, actif, date_creation) VALUES
-(2, 'Phone X', 'Smartphone 6.5" 128Go - Caméra 48MP', 699.99, 599.99, 25, true, CURRENT_TIMESTAMP),
-(2, 'Laptop Pro 14"', 'Ultrabook i7 16Go 512Go SSD', 1299.00, NULL, 12, true, CURRENT_TIMESTAMP),
-(2, 'T-Shirt ShopFlow', 'Coton bio, taille M, édition limitée', 29.99, 19.99, 100, true, CURRENT_TIMESTAMP);
+(2, 'Phone X', 'Smartphone 6.5" 128Go - Caméra 48MP, 5G', 699.99, 599.99, 25, true, CURRENT_TIMESTAMP),
+(2, 'Laptop Pro 14"', 'Ultrabook i7 16Go 512Go SSD - 14" Retina', 1299.00, NULL, 12, true, CURRENT_TIMESTAMP),
+(2, 'T-Shirt ShopFlow', 'Coton bio, édition limitée - Made in Tunisia', 29.99, 19.99, 100, true, CURRENT_TIMESTAMP),
+(2, 'Casque Audio Pro', 'Bluetooth ANC, 30h autonomie', 149.99, 129.99, 40, true, CURRENT_TIMESTAMP),
+(2, 'Montre Connectée', 'Sport GPS, étanche 5ATM', 199.99, NULL, 30, true, CURRENT_TIMESTAMP),
+(2, 'Sneakers Urban', 'Mesh respirant, taille 42-45', 89.99, 69.99, 60, true, CURRENT_TIMESTAMP),
+(2, 'Sac à Dos Tech', '15" compartiment laptop, USB', 59.99, NULL, 45, true, CURRENT_TIMESTAMP),
+(2, 'Tablette 10.9"', 'IPS 2K, 64Go, stylet inclus', 349.99, 299.99, 20, true, CURRENT_TIMESTAMP),
+(2, 'Enceinte Mini', 'Bass boost, 12h, IPX7', 79.99, NULL, 35, true, CURRENT_TIMESTAMP);
 
 -- Lien produits ↔ catégories
 INSERT INTO product_categories (product_id, category_id) VALUES (1, 3);
 INSERT INTO product_categories (product_id, category_id) VALUES (2, 4);
 INSERT INTO product_categories (product_id, category_id) VALUES (3, 2);
+INSERT INTO product_categories (product_id, category_id) VALUES (4, 1);
+INSERT INTO product_categories (product_id, category_id) VALUES (5, 1);
+INSERT INTO product_categories (product_id, category_id) VALUES (6, 2);
+INSERT INTO product_categories (product_id, category_id) VALUES (7, 2);
+INSERT INTO product_categories (product_id, category_id) VALUES (8, 1);
+INSERT INTO product_categories (product_id, category_id) VALUES (9, 1);
 
--- Images produits
+-- Images produits (picsum réelles)
 INSERT INTO product_images (product_id, image_url) VALUES
-(1, 'https://example.com/phone-x.jpg'),
-(2, 'https://example.com/laptop-pro.jpg'),
-(3, 'https://example.com/tshirt.jpg');
+(1, 'https://picsum.photos/seed/phonex/600/400'),
+(2, 'https://picsum.photos/seed/laptoppro/600/400'),
+(3, 'https://picsum.photos/seed/tshirt/600/400'),
+(4, 'https://picsum.photos/seed/casque/600/400'),
+(5, 'https://picsum.photos/seed/montre/600/400'),
+(6, 'https://picsum.photos/seed/sneakers/600/400'),
+(7, 'https://picsum.photos/seed/sac/600/400'),
+(8, 'https://picsum.photos/seed/tablette/600/400'),
+(9, 'https://picsum.photos/seed/enceinte/600/400');
 
 -- Variantes
 INSERT INTO product_variant (product_id, attribut, valeur, stock_supplementaire, prix_delta) VALUES
 (1, 'Couleur', 'Noir', 5, 0),
 (1, 'Couleur', 'Blanc', 3, 10.00),
 (3, 'Taille', 'M', 20, 0),
-(3, 'Taille', 'L', 15, 2.00);
+(3, 'Taille', 'L', 15, 2.00),
+(6, 'Taille', '42', 10, 0),
+(6, 'Taille', '44', 8, 5.00);
 
 -- Coupons
 INSERT INTO coupon (code, type, valeur, date_expiration, usages_max, usages_actuels, actif) VALUES
