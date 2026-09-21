@@ -23,10 +23,10 @@ export default function Login() {
       <h1 className="text-2xl font-bold mb-4">Login</h1>
       <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="email" className="w-full border px-3 py-2 rounded mb-2" />
       <input type="password" value={password} onChange={e=>setPassword(e.target.value)} placeholder="password" className="w-full border px-3 py-2 rounded mb-2" />
-      <button onClick={login} className="w-full bg-black text-white py-2 rounded-full">Login</button>
+      <button onClick={login} className="w-full bg-indigo-600 text-white py-2 rounded-full hover:bg-indigo-700">Login</button>
       <p className="text-sm mt-3">Pas de compte? <a href="/register" className="underline">Register</a></p>
-      {msg && <div className="mt-3 text-sm border rounded p-2 bg-zinc-50">{msg}</div>}
-      <div className="mt-6 text-xs text-zinc-500">Hint: Bearer token injecté auto via api.ts intercepteur</div>
+      {msg && <div className="mt-3 text-sm border rounded p-2 bg-zinc-50 break-all">{msg}</div>}
+      <div className="mt-6 text-xs text-zinc-500 bg-amber-50 border border-amber-200 rounded p-2">Demo: admin@shopflow.com / seller@shopflow.com / customer@shopflow.com — mdp: <b>Password123!</b><br/>Bearer token auto via api.ts</div>
     </div>
   );
 }
