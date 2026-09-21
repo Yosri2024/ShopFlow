@@ -67,9 +67,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+    defer-datasource-initialization: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
 
 ---
 # Profil PROD - PostgreSQL (Spec 3.1 production)
@@ -85,9 +90,14 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    defer-datasource-initialization: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
 
   # Désactive H2 en prod
   h2:
