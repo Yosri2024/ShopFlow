@@ -41,13 +41,13 @@ export default function Login() {
             <input type={show ? "text" : "password"} value={password} onChange={e=>setPassword(e.target.value)} placeholder="mot de passe" className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm pr-10" />
             <button type="button" onClick={()=>setShow(!show)} className="absolute right-3 top-2.5 text-zinc-400">{show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}</button>
           </div>
-          <motion.button whileTap={{ scale:0.98 }} onClick={login} disabled={loading || !validEmail || !validPass} className="w-full bg-black text-white py-2.5 rounded-full font-medium disabled:bg-zinc-300 flex items-center justify-center gap-2">
+          <motion.button whileTap={{ scale:0.98 }} onClick={login} disabled={loading || !validEmail || !validPass} className="w-full py-2.5 rounded-full font-medium disabled:opacity-50 flex items-center justify-center gap-2" style={{ background: loading || !validEmail || !validPass ? "#CBD5E1" : "#0D9488", color: "#FFFFFF" }}>
             {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : null} {loading ? "Connexion..." : "Se connecter"}
           </motion.button>
         </div>
         <p className="text-sm mt-4 text-center">Pas de compte? <a href="/register" className="underline font-medium">Creer un compte</a></p>
-        {msg && <div className="mt-3 text-sm border rounded-xl p-3 bg-zinc-50 break-all">{msg}</div>}
-        <div className="mt-4 text-xs text-zinc-500 bg-amber-50 border border-amber-200 rounded-xl p-3">Demo: seller@shopflow.com / admin@shopflow.com / customer@shopflow.com — mot de passe: <b>Password123!</b></div>
+        {msg && <div className={`mt-3 text-sm border rounded-xl p-3 break-all flex items-center gap-2 ${msg.includes("OK") ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-red-50 border-red-200 text-red-600"}`}>{!msg.includes("OK") && <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />}<span>{msg}</span></div>}
+        <div className="mt-4 text-xs border rounded-xl p-3" style={{ background: "#FFFBEB", borderColor: "#FDE68A", color: "#92400E" }}>Demo: seller@shopflow.com / admin@shopflow.com / customer@shopflow.com - mot de passe: <b>Password123!</b></div>
       </motion.div>
     </div>
   );

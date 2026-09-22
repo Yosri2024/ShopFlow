@@ -32,7 +32,8 @@ export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
     <motion.div
       whileHover={{ scale: 1.02, y: -4 }}
       transition={{ duration: 0.2 }}
-      className="group relative bg-white rounded-2xl border border-zinc-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+      className="group relative bg-white rounded-2xl border shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+      style={{ borderColor: "#CCFBF1", boxShadow: "0 4px 12px rgba(13,148,136,0.06)" }}
     >
       {/* Badge promo */}
       {hasPromo && (
@@ -63,12 +64,12 @@ export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
         )}
       </div>
 
-      {/* Content */}
-      <div className="p-4 space-y-3">
-        {/* Name & Description */}
-        <div>
-          <h3 className="font-semibold text-zinc-900 line-clamp-1 text-base">{p.nom}</h3>
-          <p className="text-sm text-zinc-500 line-clamp-2 mt-1">{p.description}</p>
+      {/* Content - flex 1 to push buttons down */}
+      <div className="p-4 flex flex-col flex-1">
+        {/* Name & Description - fixed height 2 lines */}
+        <div className="min-h-[56px]">
+          <h3 className="font-semibold line-clamp-1 text-base" style={{ color: "#0F172A", fontFamily: "var(--font-poppins)" }}>{p.nom}</h3>
+          <p className="text-sm line-clamp-2 mt-1 min-h-[40px]" style={{ color: "#64748B" }}>{p.description}</p>
         </div>
 
         {/* Rating */}
@@ -96,44 +97,32 @@ export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
           )}
         </div>
 
-        {/* Stock indicator */}
-        <div className="flex items-center gap-1 text-xs">
-          <span className={p.stock > 10 ? "text-emerald-600" : p.stock > 0 ? "text-amber-600" : "text-red-600"}>
+        {/* Stock indicator - fixed height */}
+        <div className="flex items-center gap-1 text-xs min-h-[16px]">
+          <span style={{ color: p.stock > 10 ? "#059669" : p.stock > 0 ? "#EA580C" : "#DC2626" }}>
             {p.stock > 10 ? "En stock" : p.stock > 0 ? `Plus que ${p.stock}` : "Rupture"}
           </span>
           {p.variants && p.variants.length > 0 && (
-            <span className="text-zinc-400">· {p.variants.length} variantes</span>
+            <span style={{ color: "#94A3B8" }}>· {p.variants.length} variantes</span>
           )}
         </div>
 
-        {/* Actions */}
-        <div className="flex gap-2 pt-2 border-t border-zinc-100">
-          <motion.button
-            whileTap={{ scale: 0.95 }}
+        {/* Actions - Uiverse type1 - pinned bottom */}
+        <div className="flex gap-2 pt-3 mt-auto border-t" style={{ borderColor: "#F0FDFA" }}>
+          <button
             onClick={handleQuickAdd}
             disabled={adding || p.stock === 0}
-            className="flex-1 bg-black text-white py-2.5 rounded-xl font-medium hover:bg-zinc-800 disabled:bg-zinc-300 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+            className="button type1 type1-primary flex-1"
+            style={{ height: "42px", width: "auto", flex: 1 }}
           >
-            <ShoppingCart className="w-4 h-4" />
-            {adding ? (
-              <>
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>Ajout...</span>
-              </>
-            ) : p.stock === 0 ? (
-              <span>Rupture</span>
-            ) : (
-              <span>Ajouter</span>
-            )}
-          </motion.button>
-          <motion.a
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            href={`/products/${p.id}`}
-            className="px-4 py-2.5 border border-zinc-200 rounded-xl text-zinc-700 font-medium hover:bg-zinc-50 transition-colors text-center"
-          >
-            Voir
-          </motion.a>
+            <span className="btn-txt" style={{ letterSpacing: "1px", fontSize: "12px", display: "flex", alignItems: "center", gap: "6px" }}>
+              <ShoppingCart className="w-4 h-4" />
+              {adding ? "Ajout..." : p.stock === 0 ? "Rupture" : "Ajouter"}
+            </span>
+          </button>
+          <a href={`/products/${p.id}`} className="button type1 type1-secondary" style={{ height: "42px", width: "90px", textDecoration: "none", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+            <span className="btn-txt" style={{ letterSpacing: "2px", fontSize: "12px" }}>Voir</span>
+          </a>
         </div>
       </div>
     </motion.div>

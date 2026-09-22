@@ -24,20 +24,20 @@ export default function Catalogue() {
   useEffect(()=>{ fetch(); }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white dark:from-zinc-900 dark:to-black">
+    <div className="min-h-screen" style={{ background: "linear-gradient(180deg, #F0FDFA 0%, #ECFEFF 100%)" }}>
       <div className="max-w-6xl mx-auto px-6 py-6">
-        <h1 className="text-2xl font-bold mb-4 text-zinc-800 dark:text-white">Catalogue</h1>
-        <div className="bg-white dark:bg-zinc-900 border shadow-sm rounded-2xl p-4 mb-6 flex gap-2 flex-wrap">
-          <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border border-zinc-200 bg-zinc-50 dark:bg-zinc-800 px-3 py-2 rounded-full text-sm focus:ring-2 focus:ring-indigo-500 outline-none" />
-          <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border border-zinc-200 bg-zinc-50 dark:bg-zinc-800 px-3 py-2 rounded-full text-sm w-28" />
-          <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border border-zinc-200 bg-zinc-50 dark:bg-zinc-800 px-3 py-2 rounded-full text-sm w-28" />
-          <button onClick={fetch} className="bg-indigo-600 text-white px-5 py-2 rounded-full text-sm hover:bg-indigo-700 shadow">Filtrer</button>
-          <a href="/products" className="px-4 py-2 border border-zinc-200 bg-white dark:bg-zinc-800 rounded-full text-sm hover:bg-zinc-50">Reset</a>
+        <h1 className="text-2xl font-bold mb-4" style={{ color: "#0F172A", fontFamily: "var(--font-poppins)" }}>Catalogue</h1>
+        <div className="bg-white border shadow-sm rounded-2xl p-4 mb-6 flex gap-2 flex-wrap" style={{ borderColor: "#CCFBF1", boxShadow: "0 4px 12px rgba(13,148,136,0.08)" }}>
+          <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border px-3 py-2 rounded-full text-sm focus:ring-2 outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border px-3 py-2 rounded-full text-sm w-28" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border px-3 py-2 rounded-full text-sm w-28" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <button onClick={fetch} className="px-5 py-2 rounded-full text-sm font-medium transition" style={{ background: "#0D9488", color: "#FFFFFF", boxShadow: "0 2px 8px rgba(13,148,136,0.25)" }}>Filtrer</button>
+          <a href="/products" className="px-4 py-2 border rounded-full text-sm" style={{ borderColor: "#CCFBF1", background: "#FFFFFF", color: "#0F172A" }}>Reset</a>
         </div>
-        {loading ? <div className="text-center py-10 text-zinc-500">Chargement...</div> : error ? <div className="bg-red-50 border border-red-200 text-red-600 rounded-xl p-4">{error} — Vérifie que backend :8080 tourne</div> :
-         products.length===0 ? <div className="bg-white dark:bg-zinc-900 border rounded-xl p-10 text-center text-zinc-500 shadow">Aucun produit — vérifie data.sql (9 produits) ou backend</div> :
-         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-           {products.map(p => <ProductCard key={p.id} p={p} />)}
+        {loading ? <div className="text-center py-10" style={{ color: "#64748B" }}>Chargement...</div> : error ? <div className="border rounded-xl p-4" style={{ background: "#FEF2F2", borderColor: "#FECACA", color: "#DC2626" }}>{error} - Verifie que backend :8080 tourne</div> :
+         products.length===0 ? <div className="bg-white border rounded-xl p-10 text-center shadow" style={{ borderColor: "#CCFBF1", color: "#64748B" }}>Aucun produit - verifie data.sql (9 produits) ou backend</div> :
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-fr">
+           {products.map(p => <div key={p.id} className="h-full"><ProductCard p={p} /></div>)}
          </div>
         }
       </div>

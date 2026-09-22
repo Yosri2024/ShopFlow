@@ -35,7 +35,7 @@ export default function Register() {
         <h1 className="text-xl font-bold mb-1">Creation compte</h1>
         <div className="flex gap-2 mb-4 text-sm">
           <a href="/login" className="flex-1 py-2 text-center border rounded-full">Se connecter</a>
-          <span className="flex-1 py-2 text-center bg-black text-white rounded-full">S inscrire</span>
+          <span className="flex-1 py-2 text-center rounded-full" style={{ background: "#F59E0B", color: "#1F2937" }}>S inscrire</span>
         </div>
         <div className="space-y-2">
           <input placeholder="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />
@@ -57,9 +57,9 @@ export default function Register() {
             <option value="CUSTOMER">CUSTOMER</option><option value="SELLER">SELLER</option><option value="ADMIN">ADMIN</option>
           </select>
           {form.role==="SELLER" && <input placeholder="nom boutique" value={form.nomBoutique} onChange={e=>setForm({...form,nomBoutique:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />}
-          <motion.button whileTap={{ scale:0.98 }} onClick={register} disabled={!valid} className="w-full bg-black text-white py-2.5 rounded-full font-medium disabled:bg-zinc-300">Creer compte</motion.button>
+          <motion.button whileTap={{ scale:0.98 }} onClick={register} disabled={!valid} className="w-full py-2.5 rounded-full font-medium disabled:opacity-50" style={{ background: !valid ? "#CBD5E1" : "#0D9488", color: "#FFFFFF" }}>Creer compte</motion.button>
         </div>
-        {msg && <div className="mt-3 text-sm border rounded-xl p-3 bg-zinc-50 break-all">{msg}</div>}
+        {msg && <div className={`mt-3 text-sm border rounded-xl p-3 break-all flex items-center gap-2 ${msg.includes("cree") ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-red-50 border-red-200 text-red-600"}`}>{!msg.includes("cree") && <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />}<span>{msg}</span></div>}
         <p className="text-xs text-zinc-500 mt-3">En creant un compte tu acceptes <a href="/terms" className="underline">CGV</a> et <a href="/privacy" className="underline">Confidentialite</a>.</p>
       </motion.div>
     </div>
