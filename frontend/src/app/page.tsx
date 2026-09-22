@@ -51,27 +51,32 @@ export default function Home() {
         <a href="/products" className="inline-block mt-5 px-7 py-2.5 rounded-full font-bold" style={{ background: "#FFFFFF", color: "#0F172A" }}>Voir catalogue</a>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-6 bg-white border rounded-2xl flex gap-2 flex-wrap items-center shadow-sm" style={{ borderColor: "#CCFBF1", boxShadow: "0 4px 16px rgba(13,148,136,0.08)" }}>
-        <button onClick={()=>{
-          const nc = categorie==="1" ? "" : "1";
-          setCategorie(nc); setPromo(false);
-          fetchProducts(nc, false);
-        }} className="px-4 py-2 rounded-full border text-sm font-medium transition" style={categorie==="1" ? { background: "#0D9488", color: "#FFFFFF", borderColor: "#0D9488", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" } : { background: "#FFFFFF", borderColor: "#CCFBF1", color: "#0F172A" }}>Electronics</button>
-        <button onClick={()=>{
-          const nc = categorie==="2" ? "" : "2";
-          setCategorie(nc); setPromo(false);
-          fetchProducts(nc, false);
-        }} className="px-4 py-2 rounded-full border text-sm font-medium transition" style={categorie==="2" ? { background: "#059669", color: "#FFFFFF", borderColor: "#059669", boxShadow: "0 2px 8px rgba(5,150,105,0.3)" } : { background: "#FFFFFF", borderColor: "#CCFBF1", color: "#0F172A" }}>Mode</button>
-        <button onClick={()=>{
-          const np = !promo;
-          setPromo(np); setCategorie("");
-          fetchProducts("", np);
-        }} className="px-4 py-2 rounded-full border text-sm font-medium transition" style={promo ? { background: "#F59E0B", color: "#1F2937", borderColor: "#F59E0B", boxShadow: "0 2px 8px rgba(245,158,11,0.3)" } : { background: "#FFFFFF", borderColor: "#CCFBF1", color: "#0F172A" }}>En promo</button>
-        <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border px-4 py-2 rounded-full text-sm flex-1 min-w-[140px] outline-none focus:ring-2" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
-        <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-24 outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
-        <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-24 outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
-        <button onClick={()=>fetchProducts()} className="px-6 py-2 rounded-full text-sm font-medium transition" style={{ background: "#0D9488", color: "#FFFFFF", boxShadow: "0 2px 8px rgba(13,148,136,0.25)" }}>Filtrer</button>
-        <button onClick={()=>{setQ(""); setPrixMin(""); setPrixMax(""); setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-4 py-2 rounded-full border text-sm transition hover:bg-zinc-50" style={{ borderColor: "#CCFBF1", background: "#FFFFFF", color: "#334155" }}>Reset</button>
+      <div className="max-w-6xl mx-auto px-6 py-6 bg-white border rounded-2xl p-4 space-y-3 shadow-sm" style={{ borderColor: "#CCFBF1", boxShadow: "0 4px 16px rgba(13,148,136,0.08)" }}>
+        <div className="flex gap-2 flex-wrap">
+          <button onClick={()=>{
+            const nc = categorie==="1" ? "" : "1";
+            setCategorie(nc); setPromo(false);
+            fetchProducts(nc, false);
+          }} className="px-4 py-2 rounded-full border text-sm font-medium transition" style={categorie==="1" ? { background: "#0D9488", color: "#FFFFFF", borderColor: "#0D9488", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" } : { background: "#FFFFFF", borderColor: "#CCFBF1", color: "#0F172A" }}>Electronics</button>
+          <button onClick={()=>{
+            const nc = categorie==="2" ? "" : "2";
+            setCategorie(nc); setPromo(false);
+            fetchProducts(nc, false);
+          }} className="px-4 py-2 rounded-full border text-sm font-medium transition" style={categorie==="2" ? { background: "#059669", color: "#FFFFFF", borderColor: "#059669", boxShadow: "0 2px 8px rgba(5,150,105,0.3)" } : { background: "#FFFFFF", borderColor: "#CCFBF1", color: "#0F172A" }}>Mode</button>
+          <button onClick={()=>{
+            const np = !promo;
+            setPromo(np); setCategorie("");
+            fetchProducts("", np);
+          }} className="px-4 py-2 rounded-full border text-sm font-medium transition" style={promo ? { background: "#F59E0B", color: "#1F2937", borderColor: "#F59E0B", boxShadow: "0 2px 8px rgba(245,158,11,0.3)" } : { background: "#FFFFFF", borderColor: "#CCFBF1", color: "#0F172A" }}>En promo</button>
+          {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer filtres</button>}
+        </div>
+        <div className="flex gap-2 flex-wrap">
+          <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border px-4 py-2 rounded-full text-sm flex-1 min-w-[140px] outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-24 outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-24 outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <button onClick={()=>fetchProducts()} className="px-6 py-2 rounded-full text-sm font-medium" style={{ background: "#0D9488", color: "#FFFFFF" }}>Filtrer</button>
+          <button onClick={()=>{setQ(""); setPrixMin(""); setPrixMax(""); setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-4 py-2 rounded-full border text-sm" style={{ borderColor: "#E5E7EB", background: "#FFFFFF", color: "#334155" }}>Reset</button>
+        </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 pb-10 mt-6">
