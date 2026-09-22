@@ -35,7 +35,7 @@ export default function Register() {
         <h1 className="text-xl font-bold mb-1">Creation compte</h1>
         <div className="flex gap-2 mb-4 text-sm">
           <a href="/login" className="flex-1 py-2 text-center border rounded-full">Se connecter</a>
-          <span className="flex-1 py-2 text-center rounded-full" style={{ background: "#F59E0B", color: "#1F2937" }}>S inscrire</span>
+          <span className="flex-1 py-2 text-center rounded-full" style={{ background: "#F59E0B", color: "#1F2937" }}>S&apos;inscrire</span>
         </div>
         <div className="space-y-2">
           <input placeholder="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />
