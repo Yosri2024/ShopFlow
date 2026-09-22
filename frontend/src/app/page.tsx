@@ -10,9 +10,15 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [categorie, setCategorie] = useState("");
   const [promo, setPromo] = useState(false);
+  const [q, setQ] = useState("");
+  const [prixMin, setPrixMin] = useState("");
+  const [prixMax, setPrixMax] = useState("");
 
   const fetchProducts = (cat = categorie, isPromo = promo) => {
     const params = new URLSearchParams();
+    if (q) params.set("q", q);
+    if (prixMin) params.set("prixMin", prixMin);
+    if (prixMax) params.set("prixMax", prixMax);
     if (cat) params.set("categorie", cat);
     if (isPromo) params.set("promo", "true");
     params.set("page", "0"); params.set("size", "8");
@@ -46,25 +52,33 @@ export default function Home() {
         <motion.a whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }} href="/products" className="inline-block mt-5 px-7 py-2.5 rounded-full font-bold shadow" style={{ background: "#FFFFFF", color: "#0F172A", boxShadow: "0 4px 12px rgba(15,23,42,0.15)" }}>Voir catalogue</motion.a>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-6 flex gap-2 flex-wrap items-center">
-        <button onClick={()=>{
-          const nc = categorie==="1" ? "" : "1";
-          setCategorie(nc); setPromo(false);
-          fetchProducts(nc, false);
-        }} className="button type1 type1-primary" style={{ height: "38px", padding: "0 18px", fontSize: "13px" }}><span className="btn-txt" style={{ fontSize: "12px", letterSpacing: "1px" }}>Electronics</span></button>
-        <button onClick={()=>{
-          const nc = categorie==="2" ? "" : "2";
-          setCategorie(nc); setPromo(false);
-          fetchProducts(nc, false);
-        }} className="button type1" style={{ height: "38px", padding: "0 18px", fontSize: "13px", borderColor: "#059669", color: "#059669" }}><span className="btn-txt" style={{ fontSize: "12px", letterSpacing: "1px" }}>Mode</span></button>
-        <button onClick={()=>{
-          const np = !promo;
-          setPromo(np); setCategorie("");
-          fetchProducts("", np);
-        }} className="button type1 type1-accent" style={{ height: "38px", padding: "0 18px", fontSize: "13px" }}><span className="btn-txt" style={{ fontSize: "12px", letterSpacing: "1px" }}>{promo ? "✓ En promo" : "En promo"}</span></button>
-        {cats.length===0 && <span className="text-sm" style={{ color: "#64748B" }}>Aucune catégorie</span>}
-        {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer</button>}
-        <a href="/products" className="button type1" style={{ height: "38px", padding: "0 18px", fontSize: "13px", marginLeft: "auto" }}><span className="btn-txt" style={{ fontSize: "12px" }}>Voir tout</span></a>
+      <div className="max-w-6xl mx-auto px-6 py-6 space-y-3">
+        <div className="flex gap-2 flex-wrap items-center">
+          <button onClick={()=>{
+            const nc = categorie==="1" ? "" : "1";
+            setCategorie(nc); setPromo(false);
+            fetchProducts(nc, false);
+          }} className="button type1 type1-primary" style={{ height: "38px", padding: "0 18px", fontSize: "13px" }}><span className="btn-txt" style={{ fontSize: "12px", letterSpacing: "1px" }}>Electronics</span></button>
+          <button onClick={()=>{
+            const nc = categorie==="2" ? "" : "2";
+            setCategorie(nc); setPromo(false);
+            fetchProducts(nc, false);
+          }} className="button type1" style={{ height: "38px", padding: "0 18px", fontSize: "13px", borderColor: "#059669", color: "#059669" }}><span className="btn-txt" style={{ fontSize: "12px", letterSpacing: "1px" }}>Mode</span></button>
+          <button onClick={()=>{
+            const np = !promo;
+            setPromo(np); setCategorie("");
+            fetchProducts("", np);
+          }} className="button type1 type1-accent" style={{ height: "38px", padding: "0 18px", fontSize: "13px" }}><span className="btn-txt" style={{ fontSize: "12px", letterSpacing: "1px" }}>{promo ? "✓ En promo" : "En promo"}</span></button>
+          {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer</button>}
+          <a href="/products" className="button type1 ml-auto" style={{ height: "38px", padding: "0 18px", fontSize: "13px" }}><span className="btn-txt" style={{ fontSize: "12px" }}>Voir tout</span></a>
+        </div>
+        <div className="bg-white border shadow-sm rounded-2xl p-3 flex gap-2 flex-wrap" style={{ borderColor: "#CCFBF1" }}>
+          <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border px-3 py-1.5 rounded-full text-sm flex-1 min-w-[140px] outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border px-3 py-1.5 rounded-full text-sm w-24" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border px-3 py-1.5 rounded-full text-sm w-24" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <button onClick={()=>fetchProducts()} className="button type1" style={{ height: "36px", padding: "0 18px" }}><span className="btn-txt" style={{ fontSize: "11px" }}>Filtrer</span></button>
+          <button onClick={()=>{setQ(""); setPrixMin(""); setPrixMax(""); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#CCFBF1", background: "#FFFFFF", color: "#0F172A" }}>Reset</button>
+        </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 pb-10">
