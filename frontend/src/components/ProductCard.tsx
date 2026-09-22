@@ -102,9 +102,6 @@ export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
           <span style={{ color: p.stock > 10 ? "#059669" : p.stock > 0 ? "#EA580C" : "#DC2626" }}>
             {p.stock > 10 ? "En stock" : p.stock > 0 ? `Plus que ${p.stock}` : "Rupture"}
           </span>
-          {p.variants && p.variants.length > 0 && (
-            <span style={{ color: "#94A3B8" }}>· {p.variants.length} variantes</span>
-          )}
         </div>
 
         {/* Actions - Uiverse type1 - pinned bottom */}

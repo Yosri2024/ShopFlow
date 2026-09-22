@@ -17,14 +17,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full flex flex-col">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-teal-100 bg-white py-6 text-center text-sm" style={{ borderColor: "#CCFBF1" }}>
-          <div className="font-medium" style={{ color: "#0F172A" }}>ShopFlow © 2026 - yosri</div>
-          <div className="mt-2 flex justify-center gap-4 text-xs">
-            <a href="/terms" className="hover:underline" style={{ color: "#0D9488" }}>CGV</a>
-            <a href="/privacy" className="hover:underline" style={{ color: "#0D9488" }}>Confidentialité</a>
-            <a href="/cgu" className="hover:underline" style={{ color: "#0D9488" }}>CGU</a>
-            <a href="http://localhost:8080/swagger-ui.html" className="hover:underline" style={{ color: "#0891B2" }}>API Docs</a>
+        <footer className="border-t bg-white py-8 text-sm" style={{ borderColor: "#CCFBF1" }}>
+          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-6">
+            <div>
+              <div className="font-bold mb-2" style={{ color: "#0F172A" }}>Get to Know Us</div>
+              <div className="space-y-1 text-xs" style={{ color: "#64748B" }}>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">Careers</a>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">Blog</a>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">About Amazon</a>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">Investor Relations</a>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">Amazon Devices</a>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">Amazon Science</a>
+              </div>
+            </div>
+            <div>
+              <div className="font-bold mb-2" style={{ color: "#0F172A" }}>Let Us Help You</div>
+              <div className="space-y-1 text-xs" style={{ color: "#64748B" }}>
+                <a href="/orders" className="block hover:underline hover:text-[#0D9488]">Your Account</a>
+                <a href="/orders" className="block hover:underline hover:text-[#0D9488]">Your Orders</a>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">Shipping Rates & Policies</a>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">Returns & Replacements</a>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">Manage Your Content and Devices</a>
+                <a href="#" className="block hover:underline hover:text-[#0D9488]">Help</a>
+              </div>
+            </div>
           </div>
+          <div className="text-center mt-6 pt-4 border-t text-xs" style={{ borderColor: "#F0FDFA", color: "#94A3B8" }}>ShopFlow © 2026 - yosri</div>
         </footer>
       </body>
     </html>

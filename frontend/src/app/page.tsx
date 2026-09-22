@@ -51,20 +51,20 @@ export default function Home() {
           const nc = categorie==="1" ? "" : "1";
           setCategorie(nc); setPromo(false);
           fetchProducts(nc, false);
-        }} className="px-4 py-1.5 rounded-full text-sm font-medium border shadow-sm transition" style={categorie==="1" ? { background: "#0D9488", color: "#FFFFFF", borderColor: "#0D9488", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" } : { background: "#FFFFFF", color: "#0F172A", borderColor: "#CCFBF1" }}>Electronics</button>
+        }} className="button type1 type1-primary" style={{ height: "38px", padding: "0 18px", fontSize: "13px" }}><span className="btn-txt" style={{ fontSize: "12px", letterSpacing: "1px" }}>Electronics</span></button>
         <button onClick={()=>{
           const nc = categorie==="2" ? "" : "2";
           setCategorie(nc); setPromo(false);
           fetchProducts(nc, false);
-        }} className="px-4 py-1.5 rounded-full text-sm font-medium border shadow-sm transition" style={categorie==="2" ? { background: "#059669", color: "#FFFFFF", borderColor: "#059669", boxShadow: "0 2px 8px rgba(5,150,105,0.3)" } : { background: "#FFFFFF", color: "#0F172A", borderColor: "#CCFBF1" }}>Mode</button>
+        }} className="button type1" style={{ height: "38px", padding: "0 18px", fontSize: "13px", borderColor: "#059669", color: "#059669" }}><span className="btn-txt" style={{ fontSize: "12px", letterSpacing: "1px" }}>Mode</span></button>
         <button onClick={()=>{
           const np = !promo;
           setPromo(np); setCategorie("");
           fetchProducts("", np);
-        }} className="px-4 py-1.5 rounded-full text-sm font-medium border shadow-sm transition flex items-center gap-1" style={promo ? { background: "#F59E0B", color: "#1F2937", borderColor: "#F59E0B", boxShadow: "0 2px 8px rgba(245,158,11,0.3)" } : { background: "#FFFFFF", color: "#0F172A", borderColor: "#CCFBF1" }}>{promo ? "✓ " : ""}En promo</button>
+        }} className="button type1 type1-accent" style={{ height: "38px", padding: "0 18px", fontSize: "13px" }}><span className="btn-txt" style={{ fontSize: "12px", letterSpacing: "1px" }}>{promo ? "✓ En promo" : "En promo"}</span></button>
         {cats.length===0 && <span className="text-sm" style={{ color: "#64748B" }}>Aucune catégorie</span>}
         {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer</button>}
-        <a href="/products" className="ml-auto text-sm underline" style={{ color: "#0D9488" }}>Voir tout →</a>
+        <a href="/products" className="button type1" style={{ height: "38px", padding: "0 18px", fontSize: "13px", marginLeft: "auto" }}><span className="btn-txt" style={{ fontSize: "12px" }}>Voir tout</span></a>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 pb-10">
