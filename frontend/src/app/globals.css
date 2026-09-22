@@ -124,28 +124,4 @@ body {
 .button-nav { height: 36px !important; width: auto !important; padding: 0 16px !important; font-size: 13px !important; }
 .button-nav .btn-txt { letter-spacing: 1px !important; font-size: 12px !important; }
 
-/* Mode nuit - quand html a classe dark (toggle Navbar) */
-html.dark {
-  --background: #0F172A;
-  --background-end: #134E4A;
-  --foreground: #F0FDFA;
-  --card-bg: #1E293B;
-  --card-border: #0F766E;
-}
-html.dark body {
-  background: linear-gradient(180deg, #0F172A 0%, #134E4A 100%);
-  color: #F0FDFA;
-}
-html.dark .card {
-  background: #1E293B;
-  border-color: #0F766E;
-  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.15);
-}
-html.dark nav {
-  background: #1E293B !important;
-  border-color: #0F766E !important;
-}
-html.dark footer {
-  background: #1E293B !important;
-  border-color: #0F766E !important;
-}
+
