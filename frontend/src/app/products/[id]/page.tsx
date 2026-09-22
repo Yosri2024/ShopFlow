@@ -75,7 +75,7 @@ export default function FicheProduit() {
                 <span className="w-10 text-center font-medium">{qty}</span>
                 <button onClick={()=>setQty(qty+1)} className="w-9 h-9 flex items-center justify-center hover:bg-zinc-50 rounded-r-full"><Plus className="w-4 h-4" /></button>
               </div>
-              <motion.button whileTap={{ scale:0.97 }} onClick={addToCart} className="flex-1 bg-black text-white py-2.5 rounded-full font-medium flex items-center justify-center gap-2 hover:bg-zinc-800">
+              <motion.button whileTap={{ scale:0.97 }} onClick={addToCart} className="flex-1 py-2.5 rounded-full font-medium flex items-center justify-center gap-2" style={{ background: "#0D9488", color: "#FFFFFF" }}>
                 <ShoppingCart className="w-4 h-4" /> Ajouter au panier
               </motion.button>
             </div>

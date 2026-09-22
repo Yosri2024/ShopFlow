@@ -21,7 +21,7 @@ export default function Orders() {
        orders.map(o=> (
          <div key={o.id} className="bg-white border rounded-xl p-4 mb-3">
            <div className="flex justify-between"><span className="font-mono text-sm">{o.numeroCommande}</span><OrderStatusBadge s={o.statut} /></div>
-           <div className="text-sm text-zinc-500">{new Date(o.dateCommande).toLocaleString()} — {o.totalTTC} €</div>
+           <div className="text-sm text-zinc-500">{new Date(o.dateCommande).toLocaleString()} - {o.totalTTC} €</div>
            <div className="text-xs mt-1">{o.lignes.map(l=> `${l.productNom} x ${l.quantite}`).join(", ")}</div>
            {(o.statut==="PENDING"||o.statut==="PAID") && <button onClick={()=>cancel(o.id)} className="mt-2 text-xs text-red-500 border border-red-200 px-2 py-1 rounded-full">Annuler</button>}
          </div>

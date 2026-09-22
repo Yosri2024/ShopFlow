@@ -68,15 +68,15 @@ export default function Panier() {
         </div>
 
         <div className="flex gap-2 mt-4">
-          <div className="flex-1 flex gap-2 bg-white border rounded-full p-1">
+          <div className="flex-1 flex gap-2 bg-white border rounded-full p-1" style={{ borderColor: "#CCFBF1" }}>
             <input placeholder="Code promo" value={code} onChange={e=>setCode(e.target.value)} className="flex-1 px-3 py-1 text-sm outline-none bg-transparent" />
-            <button onClick={applyCoupon} className="bg-black text-white px-4 py-1.5 rounded-full text-sm">Appliquer</button>
+            <button onClick={applyCoupon} className="px-4 py-1.5 rounded-full text-sm font-medium transition" style={{ background: "#0D9488", color: "#FFFFFF" }}>Appliquer</button>
           </div>
-          <button onClick={async()=>{await api.delete("/api/cart/coupon"); load();}} className="border px-4 rounded-full text-sm hover:bg-zinc-50">Retirer</button>
+          <button onClick={async()=>{await api.delete("/api/cart/coupon"); load();}} className="border px-4 rounded-full text-sm hover:bg-zinc-50" style={{ borderColor: "#CCFBF1" }}>Retirer</button>
         </div>
 
         {cart.lignes.length>0 && (
-          <motion.a whileTap={{ scale:0.98 }} href="/checkout" className="block mt-6 bg-black text-white text-center py-3 rounded-full font-medium hover:bg-zinc-800">Commander</motion.a>
+          <motion.a whileTap={{ scale:0.98 }} href="/checkout" className="block mt-6 text-center py-3 rounded-full font-medium transition" style={{ background: "#0D9488", color: "#FFFFFF", boxShadow: "0 4px 12px rgba(13,148,136,0.25)" }}>Commander</motion.a>
         )}
         {msg && <div className="mt-3 text-sm text-center border rounded-xl p-3 bg-zinc-50">{msg}</div>}
       </div>

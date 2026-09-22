@@ -2,7 +2,7 @@ export default function Privacy() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-10 prose prose-zinc">
       <h1 className="text-2xl font-bold">Politique de Confidentialité</h1>
-      <p className="text-sm text-zinc-500">22 septembre 2026 — ShopFlow</p>
+      <p className="text-sm text-zinc-500">22 septembre 2026 - ShopFlow</p>
       <h2 className="text-lg font-semibold mt-6">Données collectées</h2>
       <p>Email, nom, prénom, adresses de livraison, historique commandes. Stockées en PostgreSQL/H2, mot de passe haché BCrypt, JWT access 1h / refresh 7j.</p>
       <h2 className="text-lg font-semibold">Finalité</h2>

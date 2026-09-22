@@ -27,7 +27,7 @@ export default function Seller() {
 
   const chartData = {
     labels: products.slice(0,6).map(p=>p.nom.substring(0,10)),
-    datasets: [{ label: "Stock", data: products.slice(0,6).map(p=>p.stock), backgroundColor: "#18181b" }],
+    datasets: [{ label: "Stock", data: products.slice(0,6).map(p=>p.stock), backgroundColor: "#0D9488" }],
   };
 
   return (
@@ -49,17 +49,17 @@ export default function Seller() {
       </FadeIn>
 
       <div className="flex justify-between items-center mb-3">
-        <h2 className="font-semibold">Mes produits</h2>
-        <button onClick={()=>setShowModal(true)} className="bg-black text-white px-4 py-2 rounded-full text-sm">+ Nouveau produit</button>
+        <h2 className="font-semibold" style={{ color: "#0F172A" }}>Mes produits</h2>
+        <button onClick={()=>setShowModal(true)} className="px-4 py-2 rounded-full text-sm font-medium" style={{ background: "#0D9488", color: "#FFFFFF" }}>+ Nouveau produit</button>
       </div>
       {products.map(p=> (
         <motion.div key={p.id} initial={{ opacity:0 }} animate={{ opacity:1 }} className="bg-white border rounded-xl p-3 mb-2 flex justify-between items-center shadow-sm">
-          <span className="text-sm">{p.nom} — {p.stock} stock — {p.prix} €</span>
+          <span className="text-sm">{p.nom} - {p.stock} stock - {p.prix} €</span>
           <a href={`/products/${p.id}`} className="text-sm bg-zinc-100 px-3 py-1 rounded-full hover:bg-zinc-200">Voir</a>
         </motion.div>
       ))}
       {showModal && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 flex items-center justify-center p-4 z-50" style={{ background: "rgba(13,148,136,0.15)", backdropFilter: "blur(4px)" }}>
           <motion.div initial={{ scale:0.95, opacity:0 }} animate={{ scale:1, opacity:1 }} className="bg-white rounded-2xl p-6 w-full max-w-md">
             <h3 className="font-bold mb-3">Nouveau produit</h3>
             <input placeholder="Nom" value={form.nom} onChange={e=>setForm({...form,nom:e.target.value})} className="w-full border px-3 py-2 rounded-xl mb-2" />
@@ -67,8 +67,8 @@ export default function Seller() {
             <input placeholder="Stock" type="number" value={form.stock} onChange={e=>setForm({...form,stock:e.target.value})} className="w-full border px-3 py-2 rounded-xl mb-2" />
             <input placeholder="Description" value={form.description} onChange={e=>setForm({...form,description:e.target.value})} className="w-full border px-3 py-2 rounded-xl mb-3" />
             <div className="flex gap-2">
-              <button onClick={createProduct} className="flex-1 bg-black text-white py-2 rounded-full">Créer</button>
-              <button onClick={()=>setShowModal(false)} className="flex-1 border py-2 rounded-full">Annuler</button>
+              <button onClick={createProduct} className="flex-1 py-2 rounded-full font-medium" style={{ background: "#0D9488", color: "#FFFFFF" }}>Créer</button>
+              <button onClick={()=>setShowModal(false)} className="flex-1 border py-2 rounded-full" style={{ borderColor: "#CCFBF1", background: "#FFFFFF", color: "#0F172A" }}>Annuler</button>
             </div>
             {msg && <div className="mt-2 text-sm text-red-600">{msg}</div>}
           </motion.div>
