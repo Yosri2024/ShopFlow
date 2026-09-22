@@ -1,34 +1,67 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import api from "@/lib/api";
+import { motion } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Register() {
   const [form, setForm] = useState({ email:"", password:"", prenom:"", nom:"", role:"CUSTOMER", nomBoutique:"" });
+  const [show, setShow] = useState(false);
   const [msg, setMsg] = useState("");
+
+  const strength = useMemo(()=>{
+    const p = form.password;
+    let s=0; if(p.length>=8) s++; if(/[A-Z]/.test(p)) s++; if(/[0-9]/.test(p)) s++; if(/[^A-Za-z0-9]/.test(p)) s++;
+    return s;
+  }, [form.password]);
+  const strengthLabel = ["Faible","Moyen","Bon","Fort"][strength-1] || "";
+  const strengthColor = ["bg-red-500","bg-amber-500","bg-emerald-500","bg-emerald-700"][strength-1] || "bg-zinc-200";
+
+  const valid = form.email.includes("@") && form.password.length>=8 && form.prenom && form.nom;
 
   const register = async () => {
     try {
       const { data } = await api.post("/api/auth/register", form);
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
-      setMsg("Register OK - " + data.role + " -> login");
+      setMsg("Compte cree " + data.role);
       location.href = "/login";
     } catch(e:any){ setMsg(e.response?.data?.error || JSON.stringify(e.response?.data)); }
   };
 
   return (
     <div className="max-w-md mx-auto px-6 py-10">
-      <h1 className="text-2xl font-bold mb-4">Register</h1>
-      <input placeholder="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="w-full border px-3 py-2 rounded mb-2" />
-      <input placeholder="password (8+ chars)" type="password" value={form.password} onChange={e=>setForm({...form,password:e.target.value})} className="w-full border px-3 py-2 rounded mb-2" />
-      <input placeholder="prenom" value={form.prenom} onChange={e=>setForm({...form,prenom:e.target.value})} className="w-full border px-3 py-2 rounded mb-2" />
-      <input placeholder="nom" value={form.nom} onChange={e=>setForm({...form,nom:e.target.value})} className="w-full border px-3 py-2 rounded mb-2" />
-      <select value={form.role} onChange={e=>setForm({...form,role:e.target.value})} className="w-full border px-3 py-2 rounded mb-2">
-        <option value="CUSTOMER">CUSTOMER</option><option value="SELLER">SELLER</option><option value="ADMIN">ADMIN</option>
-      </select>
-      {form.role==="SELLER" && <input placeholder="nom boutique" value={form.nomBoutique} onChange={e=>setForm({...form,nomBoutique:e.target.value})} className="w-full border px-3 py-2 rounded mb-2" />}
-      <button onClick={register} className="w-full bg-black text-white py-2 rounded-full">Register</button>
-      {msg && <div className="mt-3 text-sm border rounded p-2 bg-zinc-50 break-all">{msg}</div>}
+      <motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} className="bg-white border rounded-2xl p-6 shadow-sm">
+        <h1 className="text-xl font-bold mb-1">Creation compte</h1>
+        <div className="flex gap-2 mb-4 text-sm">
+          <a href="/login" className="flex-1 py-2 text-center border rounded-full">Se connecter</a>
+          <span className="flex-1 py-2 text-center bg-black text-white rounded-full">S inscrire</span>
+        </div>
+        <div className="space-y-2">
+          <input placeholder="email" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />
+          <div className="relative">
+            <input placeholder="mot de passe 8+ chars" type={show ? "text" : "password"} value={form.password} onChange={e=>setForm({...form,password:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm pr-10" />
+            <button type="button" onClick={()=>setShow(!show)} className="absolute right-3 top-2.5 text-zinc-400">{show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}</button>
+          </div>
+          {form.password && (
+            <div className="flex items-center gap-2">
+              <div className="flex-1 h-1.5 bg-zinc-100 rounded-full overflow-hidden"><div className={`h-full ${strengthColor} transition-all`} style={{width: `${strength*25}%`}} /></div>
+              <span className="text-xs text-zinc-500">{strengthLabel}</span>
+            </div>
+          )}
+          <div className="grid grid-cols-2 gap-2">
+            <input placeholder="prenom" value={form.prenom} onChange={e=>setForm({...form,prenom:e.target.value})} className="border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />
+            <input placeholder="nom" value={form.nom} onChange={e=>setForm({...form,nom:e.target.value})} className="border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />
+          </div>
+          <select value={form.role} onChange={e=>setForm({...form,role:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm bg-white">
+            <option value="CUSTOMER">CUSTOMER</option><option value="SELLER">SELLER</option><option value="ADMIN">ADMIN</option>
+          </select>
+          {form.role==="SELLER" && <input placeholder="nom boutique" value={form.nomBoutique} onChange={e=>setForm({...form,nomBoutique:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />}
+          <motion.button whileTap={{ scale:0.98 }} onClick={register} disabled={!valid} className="w-full bg-black text-white py-2.5 rounded-full font-medium disabled:bg-zinc-300">Creer compte</motion.button>
+        </div>
+        {msg && <div className="mt-3 text-sm border rounded-xl p-3 bg-zinc-50 break-all">{msg}</div>}
+        <p className="text-xs text-zinc-500 mt-3">En creant un compte tu acceptes <a href="/terms" className="underline">CGV</a> et <a href="/privacy" className="underline">Confidentialite</a>.</p>
+      </motion.div>
     </div>
   );
 }

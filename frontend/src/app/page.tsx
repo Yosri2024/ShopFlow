@@ -15,7 +15,16 @@ export default function Home() {
     ]).finally(()=>setLoading(false));
   }, []);
 
-  if (loading) return <div className="p-10 text-center">Chargement...</div>;
+  if (loading) {
+    return (
+      <div className="max-w-6xl mx-auto px-6 py-6">
+        <div className="bg-zinc-900 text-white py-14 px-6 text-center rounded-2xl mb-6 animate-pulse"><div className="h-8 bg-zinc-800 rounded w-40 mx-auto" /></div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {Array.from({length:8}).map((_,i)=> <div key={i} className="h-48 bg-zinc-100 rounded-2xl animate-pulse" />)}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
