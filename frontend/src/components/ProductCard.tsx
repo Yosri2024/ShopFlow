@@ -16,13 +16,26 @@ export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
   const handleQuickAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!onQuickAdd) return;
+    if (typeof window !== "undefined" && !localStorage.getItem("accessToken")) {
+      alert("Connecte-toi d'abord");
+      window.location.href = "/login";
+      return;
+    }
+    if (onQuickAdd) {
+      setAdding(true);
+      try { await onQuickAdd(p.id); } finally { setAdding(false); }
+      return;
+    }
+    // fallback direct add if no handler (home page)
     setAdding(true);
     try {
-      await onQuickAdd(p.id);
-    } finally {
-      setAdding(false);
-    }
+      const api = (await import("@/lib/api")).default;
+      await api.post("/api/cart/items", { productId: p.id, quantite: 1 });
+      alert("Ajoute au panier");
+    } catch {
+      alert("Connecte-toi d'abord");
+      window.location.href = "/login";
+    } finally { setAdding(false); }
   };
 
   const hasPromo = p.prixPromo && p.prixPromo < p.prix;

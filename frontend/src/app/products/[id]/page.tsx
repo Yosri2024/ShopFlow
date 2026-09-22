@@ -22,10 +22,21 @@ export default function FicheProduit() {
   }, [id]);
 
   const addToCart = async () => {
+    if (typeof window !== "undefined" && !localStorage.getItem("accessToken")) {
+      setMsg("Connecte-toi d'abord");
+      setTimeout(()=> window.location.href="/login", 1200);
+      return;
+    }
     try {
       await api.post("/api/cart/items", { productId: Number(id), variantId: selectedVariant, quantite: qty });
       setMsg("Ajoute au panier");
-    } catch(e:any){ setMsg(e.response?.data?.error || "Connecte toi pour ajouter"); }
+    } catch(e:any){
+      const m = e.response?.data?.error || "";
+      if (m.toLowerCase().includes("unauthorized") || e.response?.status===401) {
+        setMsg("Connecte-toi d'abord");
+        setTimeout(()=> window.location.href="/login", 1200);
+      } else setMsg(m || "Erreur");
+    }
   };
 
   if (!p) return <div className="p-10 text-center">{msg || "Chargement..."}</div>;
