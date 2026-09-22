@@ -10,9 +10,12 @@ export function Navbar() {
       <div className="flex gap-2 text-sm items-center">
         <a href="/products" className="button type1 type1-primary button-nav"><span className="btn-txt">Catalogue</span></a>
         <a href="/cart" className="button type1 type1-primary button-nav"><span className="btn-txt">Panier</span></a>
-        <a href="/login" className="button type1 type1-secondary button-nav"><span className="btn-txt">Login</span></a>
-        <a href="/register" className="button type1 type1-accent button-nav"><span className="btn-txt">Register</span></a>
-        {auth && (
+        {!auth ? (
+          <>
+            <a href="/login" className="button type1 type1-secondary button-nav"><span className="btn-txt">Login</span></a>
+            <a href="/register" className="button type1 type1-accent button-nav"><span className="btn-txt">Register</span></a>
+          </>
+        ) : (
           <>
             <a href="/orders" className="px-3 py-2 rounded-xl font-medium transition" style={{ background: "#059669", color: "#FFFFFF" }}>Mes commandes</a>
             <button onClick={() => { localStorage.clear(); location.href = "/login"; }} className="px-3 py-2 rounded-xl font-medium transition focus:outline-none focus:ring-2 focus:ring-[#DC2626]" style={{ background: "#DC2626", color: "#FFFFFF", boxShadow: "0 2px 8px rgba(220,38,38,0.25)" }} onMouseEnter={e=> (e.currentTarget.style.background="#B91C1C")} onMouseLeave={e=> (e.currentTarget.style.background="#DC2626")}>Logout</button>
