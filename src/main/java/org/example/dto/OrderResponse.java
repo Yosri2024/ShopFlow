@@ -2,6 +2,7 @@ package org.example.dto;
 
 import lombok.*;
 import org.example.enums.OrderStatus;
+import org.example.enums.PaymentMethod;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public class OrderResponse {
     private Long id;
     private String numeroCommande;
     private OrderStatus statut;
+    private PaymentMethod paiement;
     private String adresseLivraison;
     private BigDecimal sousTotal;
     private BigDecimal fraisLivraison;

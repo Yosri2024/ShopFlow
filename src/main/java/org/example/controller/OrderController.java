@@ -1,9 +1,11 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.CreateOrderRequest;
 import org.example.dto.OrderResponse;
 import org.example.enums.OrderStatus;
+import org.example.enums.PaymentMethod;
 import org.example.service.OrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,10 +25,11 @@ public class OrderController {
 
     // POST /api/orders - passer une commande depuis le panier - p.5
     @PostMapping
-    public ResponseEntity<OrderResponse> create(@RequestBody(required = false) CreateOrderRequest req) {
+    public ResponseEntity<OrderResponse> create(@RequestBody(required = false) @Valid CreateOrderRequest req) {
         Long addressId = req != null ? req.getAddressId() : null;
-        String adresse = req != null ? req.getAdresseLivraison() : "Adresse par défaut";
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(addressId, adresse));
+        String adresse = req != null && req.getAdresseLivraison() != null ? req.getAdresseLivraison() : "Adresse par défaut";
+        PaymentMethod paiement = req != null && req.getPaiement() != null ? req.getPaiement() : PaymentMethod.ESPECE;
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createOrder(addressId, adresse, paiement));
     }
 
     // GET /api/orders/{id} - détail - p.5

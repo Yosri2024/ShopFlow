@@ -3,6 +3,7 @@ package org.example.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.example.enums.OrderStatus;
+import org.example.enums.PaymentMethod;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
@@ -25,6 +26,10 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private OrderStatus statut = OrderStatus.PENDING;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private PaymentMethod paiement = PaymentMethod.ESPECE;
 
     @Column(unique = true, nullable = false)
     private String numeroCommande; // ex: ORD-2024-XXXXX

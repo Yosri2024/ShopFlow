@@ -5,6 +5,7 @@ import org.example.dto.OrderResponse;
 import org.example.dto.OrderItemResponse;
 import org.example.entity.*;
 import org.example.enums.OrderStatus;
+import org.example.enums.PaymentMethod;
 import org.example.exception.ResourceNotFoundException;
 import org.example.repository.*;
 import org.springframework.data.domain.Page;
@@ -35,7 +36,7 @@ public class OrderService {
     }
 
     // POST /api/orders - passer commande depuis panier p.3
-    public OrderResponse createOrder(Long addressId, String adresseTexte) {
+    public OrderResponse createOrder(Long addressId, String adresseTexte, PaymentMethod paiement) {
         User u = currentUser();
         Cart cart = cartRepository.findByCustomerId(u.getId()).orElseThrow(() -> new IllegalArgumentException("Panier vide"));
         if (cart.getLignes().isEmpty()) throw new IllegalArgumentException("Panier vide");
@@ -55,6 +56,7 @@ public class OrderService {
         Order order = Order.builder()
                 .customer(u)
                 .statut(OrderStatus.PENDING)
+                .paiement(paiement != null ? paiement : PaymentMethod.ESPECE)
                 .adresseLivraison(adresse)
                 .dateCommande(LocalDateTime.now())
                 .build();
@@ -155,6 +157,7 @@ public class OrderService {
                 .id(o.getId())
                 .numeroCommande(o.getNumeroCommande())
                 .statut(o.getStatut())
+                .paiement(o.getPaiement())
                 .adresseLivraison(o.getAdresseLivraison())
                 .sousTotal(o.getSousTotal())
                 .fraisLivraison(o.getFraisLivraison())
