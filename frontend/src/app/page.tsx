@@ -27,6 +27,8 @@ export default function Home() {
     api.get(`/api/products?${params}`).then(r => setProducts(r.data.content || r.data)).finally(()=>setLoading(false));
   };
 
+  const [role, setRole] = useState<string | null>(null);
+  useEffect(() => { setRole(localStorage.getItem("role")); }, []);
   useEffect(() => {
     Promise.all([
       api.get("/api/products?page=0&size=8").then(r => setProducts(r.data.content || r.data)),
@@ -51,6 +53,20 @@ export default function Home() {
         <h1 className="text-4xl font-bold tracking-tight mb-2">ShopFlow</h1>
         <p className="text-zinc-300">Marketplace B2C avec 9 produits et livraison rapide</p>
         <a href="/products" className="inline-block mt-5 px-7 py-2.5 rounded-full font-bold" style={{ background: "#FFFFFF", color: "#0F172A" }}>Voir catalogue</a>
+        {role === "SELLER" && (
+          <div className="mt-6 flex justify-center gap-2 flex-wrap">
+            <a href="/seller" className="px-5 py-2 rounded-full text-sm font-bold border" style={{ background: "#0D9488", color: "white", borderColor: "#0D9488" }}>Espace Vendeur</a>
+            <a href="/seller" className="px-5 py-2 rounded-full text-sm font-bold border bg-white" style={{ borderColor: "#FFFFFF", color: "#0F172A" }}>+ Ajouter produit</a>
+            <a href="/seller" className="px-5 py-2 rounded-full text-sm font-medium border" style={{ borderColor: "#334155", color: "#CBD5E1", background: "transparent" }}>Voir commandes</a>
+            <a href="/seller" className="px-5 py-2 rounded-full text-sm font-medium border" style={{ borderColor: "#334155", color: "#CBD5E1", background: "transparent" }}>Dashboard</a>
+          </div>
+        )}
+        {role === "ADMIN" && (
+          <div className="mt-6 flex justify-center gap-2 flex-wrap">
+            <a href="/seller" className="px-5 py-2 rounded-full text-sm font-bold" style={{ background: "#F59E0B", color: "#1F2937" }}>Dashboard Admin</a>
+            <a href="/products" className="px-5 py-2 rounded-full text-sm font-bold border bg-white" style={{ borderColor: "#FFFFFF", color: "#0F172A" }}>Gérer catalogue</a>
+          </div>
+        )}
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-6 bg-white border rounded-2xl p-4 space-y-3 shadow-sm" style={{ borderColor: "#CCFBF1", boxShadow: "0 4px 16px rgba(13,148,136,0.08)" }}>
