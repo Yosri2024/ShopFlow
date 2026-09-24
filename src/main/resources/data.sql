@@ -50,17 +50,17 @@ INSERT INTO product_categories (product_id, category_id) VALUES (7, 2);
 INSERT INTO product_categories (product_id, category_id) VALUES (8, 1);
 INSERT INTO product_categories (product_id, category_id) VALUES (9, 1);
 
--- Images produits (picsum réelles)
+-- Images produits (vraies photos par produit - Unsplash)
 INSERT INTO product_images (product_id, image_url) VALUES
-(1, 'https://picsum.photos/seed/phonex/600/400'),
-(2, 'https://picsum.photos/seed/laptoppro/600/400'),
-(3, 'https://picsum.photos/seed/tshirt/600/400'),
-(4, 'https://picsum.photos/seed/casque/600/400'),
-(5, 'https://picsum.photos/seed/montre/600/400'),
-(6, 'https://picsum.photos/seed/sneakers/600/400'),
-(7, 'https://picsum.photos/seed/sac/600/400'),
-(8, 'https://picsum.photos/seed/tablette/600/400'),
-(9, 'https://picsum.photos/seed/enceinte/600/400');
+(1, 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&h=400&fit=crop&q=80'),
+(2, 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&h=400&fit=crop&q=80'),
+(3, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=400&fit=crop&q=80'),
+(4, 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=600&h=400&fit=crop&q=80'),
+(5, 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=400&fit=crop&q=80'),
+(6, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=400&fit=crop&q=80'),
+(7, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=400&fit=crop&q=80'),
+(8, 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&h=400&fit=crop&q=80'),
+(9, 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=600&h=400&fit=crop&q=80');
 
 -- Variantes
 INSERT INTO product_variant (product_id, attribut, valeur, stock_supplementaire, prix_delta) VALUES
