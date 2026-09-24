@@ -1,5 +1,8 @@
 server:
   port: 8080
+  error:
+    include-stacktrace: never
+    include-message: never
 
 spring:
   # --- Profil par défaut = dev (H2) ---
@@ -11,10 +14,16 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect
+  data:
+    web:
+      pageable:
+        max-page-size: 50
+        default-page-size: 10
 
   # H2 en mémoire pour dev/test (Spec 3.1)
   datasource:
@@ -42,16 +51,16 @@ springdoc:
 # --- JWT (Spec 3.1 : access + refresh) ---
 app:
   jwt:
-    # En prod, mets cette clé en variable env JWT_SECRET (256 bits minimum)
-    secret: 5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437
+    # Utilise env var en prod - fallback dev uniquement
+    secret: ${JWT_SECRET:5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437}
     expiration-ms: 3600000        # 1h access token
     refresh-expiration-ms: 604800000  # 7j refresh token
 
 logging:
   level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-    org.example: DEBUG
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    org.example: INFO
 
 ---
 # Profil DEV - H2 (par défaut, pas besoin de docker)

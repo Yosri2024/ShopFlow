@@ -36,7 +36,9 @@ build/
 .vscode/
 
 ### Mac OS ###
-.DS_Store# Backend
+.DS_Store
+
+# Backend
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -46,11 +48,9 @@ frontend/.next/
 frontend/out/
 frontend/dist/
 frontend/.env.local
+frontend/.env.production
 
 # IDE
 .idea/
 *.iml
 *.iws
-
-# OS
-.DS_Store

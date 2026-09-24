@@ -30,9 +30,10 @@ public class AuthService {
             throw new IllegalArgumentException("Email already exists");
         }
         Role role = Role.CUSTOMER;
-        if (req.getRole() != null && (req.getRole().equalsIgnoreCase("SELLER") || req.getRole().equalsIgnoreCase("ADMIN"))) {
-            role = Role.valueOf(req.getRole().toUpperCase());
+        if (req.getRole() != null && req.getRole().equalsIgnoreCase("SELLER")) {
+            role = Role.SELLER;
         }
+        // ADMIN cannot be self-registered - must be created via DB/migration
         User u = User.builder()
                 .email(req.getEmail())
                 .password(passwordEncoder.encode(req.getPassword()))

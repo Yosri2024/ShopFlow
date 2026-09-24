@@ -12,6 +12,7 @@ export default function Home() {
   const [q, setQ] = useState("");
   const [prixMin, setPrixMin] = useState("");
   const [prixMax, setPrixMax] = useState("");
+  const [tri, setTri] = useState("");
 
   const fetchProducts = (cat = categorie, isPromo = promo) => {
     const params = new URLSearchParams();
@@ -20,6 +21,7 @@ export default function Home() {
     if (prixMax) params.set("prixMax", prixMax);
     if (cat) params.set("categorie", cat);
     if (isPromo) params.set("promo", "true");
+    if (tri) params.set("sort", tri);
     params.set("page", "0"); params.set("size", "8");
     setLoading(true);
     api.get(`/api/products?${params}`).then(r => setProducts(r.data.content || r.data)).finally(()=>setLoading(false));
@@ -53,29 +55,36 @@ export default function Home() {
 
       <div className="max-w-6xl mx-auto px-6 py-6 bg-white border rounded-2xl p-4 space-y-3 shadow-sm" style={{ borderColor: "#CCFBF1", boxShadow: "0 4px 16px rgba(13,148,136,0.08)" }}>
         <div className="flex gap-2 flex-wrap">
-          <button onClick={()=>{
-            const nc = categorie==="1" ? "" : "1";
-            setCategorie(nc); setPromo(false);
-            fetchProducts(nc, false);
-          }} className="px-4 py-2 rounded-full border text-sm font-medium transition" style={categorie==="1" ? { background: "#0D9488", color: "#FFFFFF", borderColor: "#0D9488", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" } : { background: "#FFFFFF", borderColor: "#CCFBF1", color: "#0F172A" }}>Electronics</button>
-          <button onClick={()=>{
-            const nc = categorie==="2" ? "" : "2";
-            setCategorie(nc); setPromo(false);
-            fetchProducts(nc, false);
-          }} className="px-4 py-2 rounded-full border text-sm font-medium transition" style={categorie==="2" ? { background: "#059669", color: "#FFFFFF", borderColor: "#059669", boxShadow: "0 2px 8px rgba(5,150,105,0.3)" } : { background: "#FFFFFF", borderColor: "#CCFBF1", color: "#0F172A" }}>Mode</button>
-          <button onClick={()=>{
-            const np = !promo;
-            setPromo(np); setCategorie("");
-            fetchProducts("", np);
-          }} className="px-4 py-2 rounded-full border text-sm font-medium transition" style={promo ? { background: "#F59E0B", color: "#1F2937", borderColor: "#F59E0B", boxShadow: "0 2px 8px rgba(245,158,11,0.3)" } : { background: "#FFFFFF", borderColor: "#CCFBF1", color: "#0F172A" }}>En promo</button>
+        <button onClick={()=>{
+          const nc = categorie==="1" ? "" : "1";
+          setCategorie(nc); setPromo(false);
+          fetchProducts(nc, false);
+        }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={categorie==="1" ? { background: "#0D9488", color: "#FFFFFF", borderColor: "#0D9488", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" } : { background: "#FFFFFF", borderColor: "#0D9488", color: "#0D9488" }}>Electronics</button>
+        <button onClick={()=>{
+          const nc = categorie==="2" ? "" : "2";
+          setCategorie(nc); setPromo(false);
+          fetchProducts(nc, false);
+        }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={categorie==="2" ? { background: "#059669", color: "#FFFFFF", borderColor: "#059669", boxShadow: "0 2px 8px rgba(5,150,105,0.3)" } : { background: "#FFFFFF", borderColor: "#059669", color: "#059669" }}>Mode</button>
+        <button onClick={()=>{
+          const np = !promo;
+          setPromo(np); setCategorie("");
+          fetchProducts("", np);
+        }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={promo ? { background: "#F59E0B", color: "#1F2937", borderColor: "#F59E0B", boxShadow: "0 2px 8px rgba(245,158,11,0.3)" } : { background: "#FFFFFF", borderColor: "#F59E0B", color: "#B45309" }}>En promo</button>
           {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer filtres</button>}
         </div>
         <div className="flex gap-2 flex-wrap">
-          <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border px-4 py-2 rounded-full text-sm flex-1 min-w-[140px] outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
-          <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-24 outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
-          <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-24 outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border px-4 py-2 rounded-full text-sm flex-1 min-w-[160px] outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF" }} />
+          <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-32 outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF" }} />
+          <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-32 outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF" }} />
+          <select value={tri} onChange={e=>setTri(e.target.value)} className="border px-3 py-2 rounded-full text-sm outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF", color: "#0F172A" }}>
+            <option value="">Trier par</option>
+            <option value="nom,asc">A - Z</option>
+            <option value="nom,desc">Z - A</option>
+            <option value="prix,asc">Prix croissant</option>
+            <option value="prix,desc">Prix decroissant</option>
+          </select>
           <button onClick={()=>fetchProducts()} className="px-6 py-2 rounded-full text-sm font-medium" style={{ background: "#0D9488", color: "#FFFFFF" }}>Filtrer</button>
-          <button onClick={()=>{setQ(""); setPrixMin(""); setPrixMax(""); setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-4 py-2 rounded-full border text-sm" style={{ borderColor: "#E5E7EB", background: "#FFFFFF", color: "#334155" }}>Reset</button>
+          <button onClick={()=>{setQ(""); setPrixMin(""); setPrixMax(""); setCategorie(""); setPromo(false); setTri(""); fetchProducts("", false);}} className="px-4 py-2 rounded-full border text-sm" style={{ borderColor: "#E5E7EB", background: "#FFFFFF", color: "#334155" }}>Reset</button>
         </div>
       </div>
 

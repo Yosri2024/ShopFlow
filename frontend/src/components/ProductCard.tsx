@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Product } from "@/lib/api";
-import { motion } from "framer-motion";
-import { ShoppingCart, Star, Tag } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingCart, Star, Tag, AlertCircle, X } from "lucide-react";
 
 interface ProductCardProps {
   p: Product;
@@ -12,13 +12,14 @@ interface ProductCardProps {
 
 export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
   const [adding, setAdding] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
 
   const handleQuickAdd = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (typeof window !== "undefined" && !localStorage.getItem("accessToken")) {
-      alert("Connecte-toi d'abord");
-      window.location.href = "/login";
+      setToast("Connecte-toi d'abord");
+      setTimeout(()=> window.location.href="/login", 1500);
       return;
     }
     if (onQuickAdd) {
@@ -26,15 +27,15 @@ export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
       try { await onQuickAdd(p.id); } finally { setAdding(false); }
       return;
     }
-    // fallback direct add if no handler (home page)
     setAdding(true);
     try {
       const api = (await import("@/lib/api")).default;
       await api.post("/api/cart/items", { productId: p.id, quantite: 1 });
-      alert("Ajoute au panier");
+      setToast("Ajoute au panier");
+      setTimeout(()=> setToast(null), 2000);
     } catch {
-      alert("Connecte-toi d'abord");
-      window.location.href = "/login";
+      setToast("Connecte-toi d'abord");
+      setTimeout(()=> window.location.href="/login", 1500);
     } finally { setAdding(false); }
   };
 
@@ -48,6 +49,15 @@ export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
       className="group relative bg-white rounded-2xl border shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
       style={{ borderColor: "#CCFBF1", boxShadow: "0 4px 12px rgba(13,148,136,0.06)" }}
     >
+      <AnimatePresence>
+        {toast && (
+          <motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:10 }} className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 bg-white border rounded-xl px-3 py-2 shadow-lg flex items-center gap-2 whitespace-nowrap" style={{ borderColor: toast.includes("Ajoute") ? "#A7F3D0" : "#FECACA", background: toast.includes("Ajoute") ? "#ECFDF5" : "#FEF2F2", color: toast.includes("Ajoute") ? "#065F46" : "#DC2626" }}>
+            {toast.includes("Ajoute") ? <span className="w-2 h-2 bg-emerald-500 rounded-full" /> : <AlertCircle className="w-4 h-4" />}
+            <span className="text-xs font-medium">{toast}</span>
+            <button onClick={()=>setToast(null)} className="ml-1"><X className="w-3 h-3" /></button>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Badge promo */}
       {hasPromo && (
         <motion.div

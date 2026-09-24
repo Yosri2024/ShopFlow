@@ -22,6 +22,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import org.springframework.http.HttpMethod;
+
 import java.util.List;
 
 @Configuration
@@ -38,10 +40,10 @@ public class SecurityConfig {
         http
             .cors(c -> c.configurationSource(corsConfigurationSource()))
             .csrf(csrf -> csrf.disable())
-            .headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // for H2
+            .headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // for H2 - disable only for dev, consider profile-specific
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/products/**", "/api/categories/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/products/**", "/api/categories/**").permitAll()
                     .requestMatchers("/h2-console/**", "/swagger-ui/**", "/swagger-ui.html", "/api-docs/**", "/v3/api-docs/**").permitAll()
                     .requestMatchers("/api/auth/**").permitAll()
                     .anyRequest().authenticated()
@@ -56,9 +58,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration c = new CorsConfiguration();
-        c.setAllowedOriginPatterns(List.of("*"));
-        c.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
-        c.setAllowedHeaders(List.of("*"));
+        c.setAllowedOriginPatterns(List.of("http://localhost:3000", "http://127.0.0.1:3000", "http://192.168.100.12:3000"));
+        c.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+        c.setAllowedHeaders(List.of("Authorization","Content-Type","X-Requested-With"));
         c.setAllowCredentials(true);
         c.setExposedHeaders(List.of("Authorization"));
         UrlBasedCorsConfigurationSource s = new UrlBasedCorsConfigurationSource();
@@ -81,6 +83,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(12);
     }
 }
