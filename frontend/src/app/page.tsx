@@ -84,7 +84,7 @@ export default function Home() {
             <option value="prix,desc">Prix decroissant</option>
           </select>
           <button onClick={()=>fetchProducts()} className="px-6 py-2 rounded-full text-sm font-medium" style={{ background: "#0D9488", color: "#FFFFFF" }}>Filtrer</button>
-          <button onClick={()=>{setQ(""); setPrixMin(""); setPrixMax(""); setCategorie(""); setPromo(false); setTri(""); fetchProducts("", false);}} className="px-4 py-2 rounded-full border text-sm" style={{ borderColor: "#E5E7EB", background: "#FFFFFF", color: "#334155" }}>Reset</button>
+          <button onClick={()=>{setQ(""); setPrixMin(""); setPrixMax(""); setCategorie(""); setPromo(false); setTri(""); fetchProducts("", false);}} className="px-4 py-2 rounded-full border-2 text-sm font-semibold hover:shadow-sm transition" style={{ borderColor: "#0F172A", background: "#FFFFFF", color: "#0F172A" }}>Reset</button>
         </div>
       </div>
 
