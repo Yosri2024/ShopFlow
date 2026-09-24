@@ -75,15 +75,6 @@ export default function Register() {
           <motion.button whileTap={{ scale:0.98 }} onClick={register} disabled={!valid} className="w-full py-2.5 rounded-full font-medium disabled:opacity-50" style={{ background: !valid ? "#CBD5E1" : "#0D9488", color: "#FFFFFF" }}>Creer compte</motion.button>
         </div>
         {msg && <div className={`mt-3 text-sm border rounded-xl p-3 break-all flex items-center gap-2 ${msg.includes("cree") ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-red-50 border-red-200 text-red-600"}`}>{!msg.includes("cree") && <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />}<span>{msg}</span></div>}
-        <div className="mt-4 p-3 rounded-xl border bg-zinc-50" style={{borderColor:"#E2E8F0"}}>
-          <div className="text-xs font-semibold mb-2" style={{color:"#0F172A"}}>Comptes démo (backend doit tourner sur :8080) :</div>
-          <div className="grid grid-cols-3 gap-2 text-[11px]">
-            <button type="button" onClick={()=>setForm({email:"admin@shopflow.com",password:"Password123!",prenom:"Admin",nom:"ShopFlow",role:"ADMIN",nomBoutique:""})} className="p-2 rounded-xl border bg-white hover:shadow text-left" style={{borderColor:"#FECACA"}}><div className="font-bold" style={{color:"#DC2626"}}>ADMIN</div><div className="truncate">admin@shopflow.com</div><div className="text-zinc-400">Password123!</div><div className="mt-1 text-[10px]">/seller non, /dashboard/admin</div></button>
-            <button type="button" onClick={()=>setForm({email:"seller@shopflow.com",password:"Password123!",prenom:"Ali",nom:"Seller",role:"SELLER",nomBoutique:"ShopAli"})} className="p-2 rounded-xl border bg-white hover:shadow text-left" style={{borderColor:"#CCFBF1"}}><div className="font-bold" style={{color:"#0D9488"}}>SELLER</div><div className="truncate">seller@shopflow.com</div><div className="text-zinc-400">Password123!</div><div className="mt-1 text-[10px]">/seller dashboard</div></button>
-            <button type="button" onClick={()=>setForm({email:"customer@shopflow.com",password:"Password123!",prenom:"Yosri",nom:"Customer",role:"CUSTOMER",nomBoutique:""})} className="p-2 rounded-xl border bg-white hover:shadow text-left" style={{borderColor:"#BFDBFE"}}><div className="font-bold" style={{color:"#2563EB"}}>CUSTOMER</div><div className="truncate">customer@shopflow.com</div><div className="text-zinc-400">Password123!</div><div className="mt-1 text-[10px]">/cart /orders</div></button>
-          </div>
-          <div className="text-[10px] mt-2" style={{color:"#64748B"}}>Clique pour remplir le formulaire, puis <b>Créer compte</b> (CUSTOMER/SELLER) ou va sur <a href="/login" className="underline">Login</a> pour ADMIN (déjà créé).</div>
-        </div>
         <p className="text-xs text-zinc-500 mt-3">En creant un compte tu acceptes <a href="/terms" className="underline">CGV</a> et <a href="/privacy" className="underline">Confidentialite</a>.</p>
       </motion.div>
     </div>
