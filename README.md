@@ -115,7 +115,7 @@ L'interface est disponible sur **http://localhost:3000**
 # Créer la base "shopflow" puis :
 export DB_USERNAME=shopflow
 export DB_PASSWORD=votre_mot_de_passe
-export JWT_SECRET=une_cle_aleatoire_de_256_bits_minimum
+export JWT_SECRET=$(openssl rand -base64 32)
 mvn spring-boot:run -Dspring-boot.run.profiles=prod
 ```
 
@@ -187,5 +187,6 @@ Une collection **Postman** prête à l'emploi est fournie : importez `shopflow.p
 
 ## 📄 Licence
 
-Projet académique réalisé durant l'année universitaire 2025/2026.
-Ajoutez ici la licence de votre choix (par exemple MIT).
+Distribué sous licence **MIT**. Voir le fichier [LICENSE](LICENSE).
+
+Projet réalisé dans le cadre de l'année universitaire 2025/2026.
