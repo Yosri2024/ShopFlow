@@ -37,23 +37,23 @@ export default function Catalogue() {
           <div className="flex gap-2 flex-wrap">
             <button onClick={()=>{
               const nc = categorie==="1" ? "" : "1";
-              setCategorie(nc); setPromo(false);
-              const p = new URLSearchParams(); if(q) p.set("q",q); if(prixMin) p.set("prixMin",prixMin); if(prixMax) p.set("prixMax",prixMax); if(nc) p.set("categorie",nc); p.set("page","0"); p.set("size","20");
+              setCategorie(nc);
+              const p = new URLSearchParams(); if(q) p.set("q",q); if(prixMin) p.set("prixMin",prixMin); if(prixMax) p.set("prixMax",prixMax); if(nc) p.set("categorie",nc); if(promo) p.set("promo","true"); p.set("page","0"); p.set("size","20");
               setLoading(true); api.get(`/api/products?${p}`).then(r=>setProducts(r.data.content||r.data)).finally(()=>setLoading(false));
-            }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={categorie==="1" ? { background: "#0D9488", color: "#FFFFFF", borderColor: "#0D9488", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" } : { background: "#FFFFFF", borderColor: "#0D9488", color: "#0D9488" }}>Electronics</button>
+            }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={categorie==="1" ? { background: "#0D9488", color: "#FFFFFF", borderColor: "#0D9488", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" } : { background: "#FFFFFF", borderColor: "#0D9488", color: "#0D9488" }}>Électronique</button>
             <button onClick={()=>{
               const nc = categorie==="2" ? "" : "2";
-              setCategorie(nc); setPromo(false);
-              const p = new URLSearchParams(); if(q) p.set("q",q); if(prixMin) p.set("prixMin",prixMin); if(prixMax) p.set("prixMax",prixMax); if(nc) p.set("categorie",nc); p.set("page","0"); p.set("size","20");
+              setCategorie(nc);
+              const p = new URLSearchParams(); if(q) p.set("q",q); if(prixMin) p.set("prixMin",prixMin); if(prixMax) p.set("prixMax",prixMax); if(nc) p.set("categorie",nc); if(promo) p.set("promo","true"); p.set("page","0"); p.set("size","20");
               setLoading(true); api.get(`/api/products?${p}`).then(r=>setProducts(r.data.content||r.data)).finally(()=>setLoading(false));
             }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={categorie==="2" ? { background: "#059669", color: "#FFFFFF", borderColor: "#059669", boxShadow: "0 2px 8px rgba(5,150,105,0.3)" } : { background: "#FFFFFF", borderColor: "#059669", color: "#059669" }}>Mode</button>
             <button onClick={()=>{
               const np = !promo;
-              setPromo(np); setCategorie("");
-              const p = new URLSearchParams(); if(q) p.set("q",q); if(prixMin) p.set("prixMin",prixMin); if(prixMax) p.set("prixMax",prixMax); if(np) p.set("promo","true"); p.set("page","0"); p.set("size","20");
+              setPromo(np);
+              const p = new URLSearchParams(); if(q) p.set("q",q); if(prixMin) p.set("prixMin",prixMin); if(prixMax) p.set("prixMax",prixMax); if(np) p.set("promo","true"); if(categorie) p.set("categorie",categorie); p.set("page","0"); p.set("size","20");
               setLoading(true); api.get(`/api/products?${p}`).then(r=>setProducts(r.data.content||r.data)).finally(()=>setLoading(false));
             }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={promo ? { background: "#F59E0B", color: "#1F2937", borderColor: "#F59E0B", boxShadow: "0 2px 8px rgba(245,158,11,0.3)" } : { background: "#FFFFFF", borderColor: "#F59E0B", color: "#B45309" }}>En promo</button>
-            {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); const p=new URLSearchParams(); if(q) p.set("q",q); if(prixMin) p.set("prixMin",prixMin); if(prixMax) p.set("prixMax",prixMax); p.set("page","0"); p.set("size","20"); setLoading(true); api.get(`/api/products?${p}`).then(r=>setProducts(r.data.content||r.data)).finally(()=>setLoading(false));}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer filtres</button>}
+            {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); const p=new URLSearchParams(); if(q) p.set("q",q); if(prixMin) p.set("prixMin",prixMin); if(prixMax) p.set("prixMax",prixMax); p.set("page","0"); p.set("size","20"); setLoading(true); api.get(`/api/products?${p}`).then(r=>setProducts(r.data.content||r.data)).finally(()=>setLoading(false));}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer filtre(s)</button>}
           </div>
           <div className="flex gap-2 flex-wrap">
             <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border px-4 py-2 rounded-full text-sm flex-1 min-w-[160px] outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF" }} />

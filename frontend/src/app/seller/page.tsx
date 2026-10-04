@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+export const dynamic = "force-dynamic";
+import { useSearchParams } from "next/navigation";
 import api from "@/lib/api";
 import { motion, AnimatePresence } from "framer-motion";
 import { FadeIn } from "@/components/Skeleton";
@@ -9,7 +11,9 @@ import { Package, ShoppingBag, LayoutDashboard, Plus, Eye, Truck, CheckCircle } 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export default function Seller() {
-  const [tab, setTab] = useState<"dashboard"|"produits"|"commandes">("dashboard");
+  const searchParams = useSearchParams();
+  const initialTab = (searchParams.get("tab") as "dashboard"|"produits"|"commandes") || "dashboard";
+  const [tab, setTab] = useState<"dashboard"|"produits"|"commandes">(initialTab);
   const [stats, setStats] = useState<any>(null);
   const [products, setProducts] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
@@ -19,10 +23,17 @@ export default function Seller() {
 
   const load = () => {
     api.get("/api/dashboard/seller").then(r=>setStats(r.data)).catch(()=>{});
-    api.get("/api/products?size=50").then(r=>setProducts(r.data.content||r.data)).catch(()=>{});
+    const userId = typeof window !== "undefined" ? localStorage.getItem("userId") : null;
+    api.get("/api/products?size=100").then(r=>{
+      const all = r.data.content || r.data;
+      // seller voit seulement ses produits (filtre par sellerId si userId connu, sinon fallback stats)
+      const filtered = userId ? all.filter((p:any)=> String(p.sellerId) === String(userId)) : all;
+      setProducts(filtered.length ? filtered : all);
+    }).catch(()=>{});
     api.get("/api/orders?page=0&size=20").then(r=>setOrders(r.data.content||r.data)).catch(()=>{});
   };
   useEffect(()=>{ load(); },[]);
+  useEffect(()=>{ const t = searchParams.get("tab"); if(t==="produits"||t==="commandes"||t==="dashboard") setTab(t as any); },[searchParams]);
 
   const createProduct = async () => {
     try {

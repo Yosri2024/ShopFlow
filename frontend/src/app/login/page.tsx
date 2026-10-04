@@ -22,6 +22,7 @@ export default function Login() {
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("role", data.role);
+      if (data.id) localStorage.setItem("userId", String(data.id));
       setMsg("Login OK " + data.role);
       location.href = "/";
     } catch(e:any){ setMsg(e.response?.data?.error || "Erreur login"); } finally { setLoading(false); }

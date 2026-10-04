@@ -52,7 +52,7 @@ public class AuthService {
         var ud = userDetailsService.loadUserByUsername(u.getEmail());
         String access = jwtService.generateAccessToken(ud);
         String refresh = jwtService.generateRefreshToken(ud);
-        return JwtResponse.builder().accessToken(access).refreshToken(refresh).email(u.getEmail()).role(role.name()).expiresIn(3600L).build();
+        return JwtResponse.builder().accessToken(access).refreshToken(refresh).email(u.getEmail()).role(role.name()).id(u.getId()).expiresIn(3600L).build();
     }
 
     public JwtResponse login(String email, String password) {
@@ -61,7 +61,7 @@ public class AuthService {
         User u = userRepository.findByEmail(email).orElseThrow();
         String access = jwtService.generateAccessToken(ud);
         String refresh = jwtService.generateRefreshToken(ud);
-        return JwtResponse.builder().accessToken(access).refreshToken(refresh).email(email).role(u.getRole().name()).expiresIn(3600L).build();
+        return JwtResponse.builder().accessToken(access).refreshToken(refresh).email(email).role(u.getRole().name()).id(u.getId()).expiresIn(3600L).build();
     }
 
     public JwtResponse refresh(String refreshToken) {
@@ -70,6 +70,6 @@ public class AuthService {
         if (!jwtService.isValid(refreshToken, ud)) throw new IllegalArgumentException("Invalid refresh token");
         String newAccess = jwtService.generateAccessToken(ud);
         User u = userRepository.findByEmail(email).orElseThrow();
-        return JwtResponse.builder().accessToken(newAccess).refreshToken(refreshToken).email(email).role(u.getRole().name()).expiresIn(3600L).build();
+        return JwtResponse.builder().accessToken(newAccess).refreshToken(refreshToken).email(email).role(u.getRole().name()).id(u.getId()).expiresIn(3600L).build();
     }
 }

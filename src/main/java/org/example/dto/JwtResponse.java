@@ -8,5 +8,6 @@ public class JwtResponse {
     private String refreshToken;
     private String email;
     private String role;
+    private Long id;
     private Long expiresIn;
 }

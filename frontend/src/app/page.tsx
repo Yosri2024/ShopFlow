@@ -55,10 +55,9 @@ export default function Home() {
         <a href="/products" className="inline-block mt-5 px-7 py-2.5 rounded-full font-bold" style={{ background: "#FFFFFF", color: "#0F172A" }}>Voir catalogue</a>
         {role === "SELLER" && (
           <div className="mt-6 flex justify-center gap-2 flex-wrap">
-            <a href="/seller" className="px-5 py-2 rounded-full text-sm font-bold border" style={{ background: "#0D9488", color: "white", borderColor: "#0D9488" }}>Espace Vendeur</a>
-            <a href="/seller" className="px-5 py-2 rounded-full text-sm font-bold border bg-white" style={{ borderColor: "#FFFFFF", color: "#0F172A" }}>+ Ajouter produit</a>
-            <a href="/seller" className="px-5 py-2 rounded-full text-sm font-medium border" style={{ borderColor: "#334155", color: "#CBD5E1", background: "transparent" }}>Voir commandes</a>
-            <a href="/seller" className="px-5 py-2 rounded-full text-sm font-medium border" style={{ borderColor: "#334155", color: "#CBD5E1", background: "transparent" }}>Dashboard</a>
+            <a href="/seller?tab=produits" className="px-5 py-2 rounded-full text-sm font-bold border bg-white" style={{ borderColor: "#FFFFFF", color: "#0F172A" }}>+ Ajouter produit</a>
+            <a href="/seller?tab=commandes" className="px-5 py-2 rounded-full text-sm font-medium border" style={{ borderColor: "#334155", color: "#CBD5E1", background: "transparent" }}>Voir commandes</a>
+            <a href="/seller?tab=dashboard" className="px-5 py-2 rounded-full text-sm font-medium border" style={{ borderColor: "#334155", color: "#CBD5E1", background: "transparent" }}>Dashboard</a>
           </div>
         )}
         {role === "ADMIN" && (
@@ -73,20 +72,20 @@ export default function Home() {
         <div className="flex gap-2 flex-wrap">
         <button onClick={()=>{
           const nc = categorie==="1" ? "" : "1";
-          setCategorie(nc); setPromo(false);
-          fetchProducts(nc, false);
-        }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={categorie==="1" ? { background: "#0D9488", color: "#FFFFFF", borderColor: "#0D9488", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" } : { background: "#FFFFFF", borderColor: "#0D9488", color: "#0D9488" }}>Electronics</button>
+          setCategorie(nc);
+          fetchProducts(nc, promo);
+        }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={categorie==="1" ? { background: "#0D9488", color: "#FFFFFF", borderColor: "#0D9488", boxShadow: "0 2px 8px rgba(13,148,136,0.3)" } : { background: "#FFFFFF", borderColor: "#0D9488", color: "#0D9488" }}>Électronique</button>
         <button onClick={()=>{
           const nc = categorie==="2" ? "" : "2";
-          setCategorie(nc); setPromo(false);
-          fetchProducts(nc, false);
+          setCategorie(nc);
+          fetchProducts(nc, promo);
         }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={categorie==="2" ? { background: "#059669", color: "#FFFFFF", borderColor: "#059669", boxShadow: "0 2px 8px rgba(5,150,105,0.3)" } : { background: "#FFFFFF", borderColor: "#059669", color: "#059669" }}>Mode</button>
         <button onClick={()=>{
           const np = !promo;
-          setPromo(np); setCategorie("");
-          fetchProducts("", np);
+          setPromo(np);
+          fetchProducts(categorie, np);
         }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={promo ? { background: "#F59E0B", color: "#1F2937", borderColor: "#F59E0B", boxShadow: "0 2px 8px rgba(245,158,11,0.3)" } : { background: "#FFFFFF", borderColor: "#F59E0B", color: "#B45309" }}>En promo</button>
-          {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer filtres</button>}
+          {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer filtre(s)</button>}
         </div>
         <div className="flex gap-2 flex-wrap">
           <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border px-4 py-2 rounded-full text-sm flex-1 min-w-[160px] outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF" }} />

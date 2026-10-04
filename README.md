@@ -1,62 +1,191 @@
-# ShopFlow - Marketplace B2C Spring Boot 3 + Next.js
+# 🛒 ShopFlow
 
-MiniProjet Ghada Feki 2025/2026 - Boutique en ligne (ADMIN/SELLER/CUSTOMER) - Duration 3 semaines
+> Marketplace B2C full-stack : API REST **Spring Boot 3** + interface **Next.js**, avec trois rôles (Admin, Vendeur, Client).
 
-## Architecture p.4
-Controller (REST @RestController) → Service (@Transactional) → Repository (JpaRepository+Specifications+Pageable) → Entity (Jakarta Persistence 3)
-DTO séparés + MapStruct + @ControllerAdvice + Lombok
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4-6DB33F)
+![Next.js](https://img.shields.io/badge/Next.js-16-black)
+![React](https://img.shields.io/badge/React-19-61DAFB)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-ready-336791)
 
-## Stack Backend (Spec 3.1)
-Java 21, Spring Boot 3.4.13, Spring MVC, Spring Data JPA, Jakarta Validation, Lombok, PostgreSQL 18 / H2, Spring Security 6 + JWT jjwt 0.12.6, Springdoc OpenAPI 2.8.13, MapStruct 1.5.5, Maven
+ShopFlow permet à des vendeurs de publier des produits et à des clients de les acheter : catalogue paginé avec filtres, panier, coupons, commandes, avis modérés et tableaux de bord de ventes.
 
-## Backend Endpoints p.5
-- Auth: POST /api/auth/register, /login, /refresh, /logout
-- Products: GET /api/products (paginé + filtres categorie/prix/vendeur/promo), GET /{id}, POST/PUT/DELETE (SELLER/ADMIN), GET /search?q=, GET /top-selling
-- Categories: GET /api/categories (arbre), POST/PUT/DELETE (ADMIN)
-- Cart: GET /api/cart, POST /items, PUT /items/{id}, DELETE /items/{id}, POST/DELETE /coupon
-- Orders: POST /api/orders, GET /{id}, GET /my, PUT /{id}/status (SELLER/ADMIN), PUT /{id}/cancel (CUSTOMER), GET / (ADMIN)
-- Reviews: POST /api/reviews, GET /product/{id}, PUT /{id}/approve (ADMIN)
-- Coupons: POST/PUT/DELETE /api/coupons (ADMIN), GET /validate/{code}
-- Dashboard: GET /api/dashboard/admin, /seller
-- Swagger: /swagger-ui.html , /api-docs
+---
 
-## Lancement Backend
-```bash
-# Dev (H2, create-drop)
-JAVA_HOME=/home/yosriii/.jdks/ms-21.0.12.1 mvn spring-boot:run
-# ou
-JAVA_HOME=/home/yosriii/.jdks/ms-21.0.12.1 mvn spring-boot:run -Dspring-boot.run.profiles=dev
-# http://localhost:8080/swagger-ui.html , http://localhost:8080/h2-console (jdbc:h2:mem:shopflow sa/)
+## ✨ Fonctionnalités
 
-# Prod (PostgreSQL - voir pg_hba.conf md5)
-sudo systemctl start postgresql
-DB_USERNAME=shopflow DB_PASSWORD=shopflow mvn spring-boot:run -Dspring-boot.run.profiles=prod
+| Rôle | Ce qu'il peut faire |
+|------|---------------------|
+| **Client** | Parcourir et rechercher les produits, gérer son panier, appliquer un coupon, passer et annuler une commande, laisser un avis |
+| **Vendeur** | Créer / modifier / supprimer ses produits, suivre ses commandes et faire évoluer leur statut, consulter son tableau de bord |
+| **Admin** | Gérer les catégories et les coupons, modérer les avis, voir toutes les commandes, consulter le tableau de bord global |
+
+Autres points :
+- Authentification **JWT** (access token 1 h + refresh token 7 j)
+- Catalogue **paginé** avec filtres (catégorie, prix, vendeur, promo) et recherche
+- Catégories organisées en **arbre** (parent / sous-catégories)
+- Cycle de vie d'une commande : `PENDING → PAID → PROCESSING → SHIPPED → DELIVERED` (ou `CANCELLED`)
+- Coupons de type pourcentage ou montant fixe
+- Documentation interactive **Swagger UI**
+- Jeu de données de démonstration chargé automatiquement
+
+---
+
+## 🧱 Stack technique
+
+**Backend**
+- Java 21, Spring Boot 3.4 (Web, Data JPA, Validation, Security)
+- JWT avec [jjwt](https://github.com/jwtk/jjwt) 0.12
+- MapStruct + Lombok
+- H2 (développement) / PostgreSQL (production)
+- Springdoc OpenAPI (Swagger)
+- Maven
+
+**Frontend**
+- Next.js 16 (App Router), React 19, TypeScript
+- Tailwind CSS 4
+- Axios, Chart.js, Framer Motion, Lucide
+
+### Architecture backend
+
+```
+Controller (REST)  →  Service (@Transactional)  →  Repository (JPA + Specifications)  →  Entity
+        ↑                                                                    
+       DTO + Mapper (MapStruct)        GlobalExceptionHandler (@ControllerAdvice)
 ```
 
-## Lancement Frontend (Spec 4.1 Next.js choisi)
+```
+ShopFlow/
+├── src/main/java/org/example/
+│   ├── controller/   # Endpoints REST
+│   ├── service/      # Logique métier
+│   ├── repository/   # Accès aux données (+ ProductSpecifications)
+│   ├── entity/       # Entités JPA
+│   ├── dto/          # Objets d'échange requête / réponse
+│   ├── mapper/       # MapStruct
+│   ├── security/     # JWT, filtre d'authentification
+│   ├── config/       # SecurityConfig (CORS, règles d'accès)
+│   └── exception/    # Gestion centralisée des erreurs
+├── src/main/resources/
+│   ├── application.yml   # Profils dev / prod
+│   └── data.sql          # Données de démonstration
+├── frontend/             # Application Next.js
+├── shopflow.postman_collection.json
+└── rapport.pdf
+```
+
+---
+
+## 🚀 Démarrage rapide
+
+### Prérequis
+- JDK **21**
+- Maven 3.9+
+- Node.js **20+** et npm
+- (Optionnel) PostgreSQL pour le profil `prod`
+
+### 1. Backend (profil `dev`, base H2 en mémoire)
+
+```bash
+mvn spring-boot:run
+```
+
+L'API démarre sur **http://localhost:8080**
+
+| Ressource | URL |
+|-----------|-----|
+| Swagger UI | http://localhost:8080/swagger-ui.html |
+| Documentation OpenAPI | http://localhost:8080/api-docs |
+| Console H2 | http://localhost:8080/h2-console (`jdbc:h2:mem:shopflow`, utilisateur `sa`, mot de passe vide) |
+
+### 2. Frontend
+
 ```bash
 cd frontend
-echo "NEXT_PUBLIC_API_URL=http://localhost:8080" > .env.local
+cp .env.example .env.local      # puis adaptez l'URL de l'API si besoin
 npm install
-npm run dev # http://localhost:3000
-npm run build
+npm run dev
 ```
 
-## Tests rapides
+L'interface est disponible sur **http://localhost:3000**
+
+### 3. Production (PostgreSQL)
+
 ```bash
-# Register/Login
-curl -X POST http://localhost:8080/api/auth/register -H "Content-Type: application/json" -d '{"email":"test@test.com","password":"Password123!","prenom":"Test","nom":"User"}'
-curl -X POST http://localhost:8080/api/auth/login -d '{"email":"test@test.com","password":"Password123!"}' # → accessToken
-
-# Products (pagination obligatoire p.3)
-curl http://localhost:8080/api/products?page=0&size=10
+# Créer la base "shopflow" puis :
+export DB_USERNAME=shopflow
+export DB_PASSWORD=votre_mot_de_passe
+export JWT_SECRET=une_cle_aleatoire_de_256_bits_minimum
+mvn spring-boot:run -Dspring-boot.run.profiles=prod
 ```
 
-## Livrables p.6
-- backend/ (sans target/), frontend/ (sans node_modules/.next/), rapport.pdf, README.md, shopflow.postman_collection.json, data.sql
+---
 
-## Postman
-Import `shopflow.postman_collection.json` (voir fichier à la racine)
+## 👤 Comptes de démonstration
 
-## Auteur
-Choix Next.js justifié: SSR/SSG pour SEO catalogue, App Router, intercepteur JWT, écosystème React.
+Créés automatiquement par `data.sql`. Mot de passe commun : `Password123!`
+
+| Rôle | Email |
+|------|-------|
+| Admin | `admin@shopflow.com` |
+| Vendeur | `seller@shopflow.com` |
+| Client | `customer@shopflow.com` |
+
+> ⚠️ Ces comptes sont destinés au développement uniquement. Ne les conservez pas en production.
+
+---
+
+## 📡 API REST
+
+| Domaine | Endpoints principaux |
+|---------|----------------------|
+| **Auth** | `POST /api/auth/register` · `/login` · `/refresh` · `/logout` |
+| **Produits** | `GET /api/products` (pagination + filtres) · `GET /{id}` · `GET /search?q=` · `GET /top-selling` · `POST` `PUT` `DELETE` (Vendeur / Admin) |
+| **Catégories** | `GET /api/categories` (arbre) · `POST` `PUT` `DELETE` (Admin) |
+| **Panier** | `GET /api/cart` · `POST /items` · `PUT /items/{id}` · `DELETE /items/{id}` · `POST` `DELETE /coupon` |
+| **Commandes** | `POST /api/orders` · `GET /my` · `GET /{id}` · `PUT /{id}/cancel` (Client) · `PUT /{id}/status` (Vendeur / Admin) · `GET /` (Admin) |
+| **Avis** | `POST /api/reviews` · `GET /product/{id}` · `PUT /{id}/approve` (Admin) |
+| **Coupons** | `GET /api/coupons/validate/{code}` · `POST` `PUT` `DELETE` (Admin) |
+| **Dashboard** | `GET /api/dashboard/admin` · `GET /api/dashboard/seller` |
+
+Exemple rapide :
+
+```bash
+# Connexion
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"customer@shopflow.com","password":"Password123!"}'
+
+# Liste paginée des produits
+curl "http://localhost:8080/api/products?page=0&size=10"
+```
+
+Une collection **Postman** prête à l'emploi est fournie : importez `shopflow.postman_collection.json`.
+
+---
+
+## 🖥️ Pages du frontend
+
+`/` Accueil · `/products` Catalogue · `/products/[id]` Détail produit · `/cart` Panier · `/checkout` Paiement · `/orders` Mes commandes · `/seller` Espace vendeur · `/login` · `/register` · `/terms` · `/privacy` · `/cgu`
+
+---
+
+## ⚠️ Limites connues
+
+- Le paiement est **simulé** (pas d'intégration d'un vrai prestataire).
+- La couverture de tests automatisés est à compléter (`src/test` est vide).
+- La configuration CORS est ouverte à toutes les origines : à restreindre pour un déploiement réel.
+
+## 🗺️ Pistes d'amélioration
+
+- Tests unitaires et d'intégration (JUnit, Testcontainers)
+- Conteneurisation (Docker Compose : API + frontend + PostgreSQL)
+- Upload d'images produits
+- Intégration d'un paiement réel (Stripe, etc.)
+
+---
+
+## 📄 Licence
+
+Projet académique réalisé durant l'année universitaire 2025/2026.
+Ajoutez ici la licence de votre choix (par exemple MIT).
