@@ -52,7 +52,7 @@ springdoc:
 app:
   jwt:
     # Utilise env var en prod - fallback dev uniquement
-    secret: ${JWT_SECRET:5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437}
+    secret: ${JWT_SECRET:Y2xlLWRlLWRldi11bmlxdWVtZW50LWEtY2hhbmdlci0wMTIzNDU2Nzg5}
     expiration-ms: 3600000        # 1h access token
     refresh-expiration-ms: 604800000  # 7j refresh token
 
