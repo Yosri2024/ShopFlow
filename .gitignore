@@ -54,3 +54,4 @@ frontend/.env.production
 .idea/
 *.iml
 *.iws
+frontend/.env.production
