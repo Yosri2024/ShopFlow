@@ -23,30 +23,29 @@ Controller (REST) → Service (@Transactional) → Repository (JPA + Specificati
 ```
 
 ### Project Structure
-```
-ShopFlow/
-├── backend/
-│   ├── src/main/java/org/example/
-│   │   ├── controller/     # REST endpoints (8 controllers, 35 endpoints)
-│   │   ├── service/        # Business logic (8 services)
-│   │   ├── repository/     # Data access + ProductSpecifications
-│   │   ├── entity/         # 12 JPA entities
-│   │   ├── dto/            # Request/Response objects
-│   │   ├── mapper/         # MapStruct mappers
-│   │   ├── security/       # JWT, authentication filter
-│   │   ├── config/         # SecurityConfig, CORS, OpenAPI
-│   │   └── exception/      # Global error handling
-│   ├── src/main/resources/
-│   │   ├── application.yml     # Dev (H2) / Prod (PostgreSQL) profiles
-│   │   └── data.sql            # Demo data seeding
-│   └── pom.xml
-├── frontend/
-│   ├── src/app/            # Next.js 16 App Router (11 routes)
-│   ├── src/components/     # Reusable UI components
-│   ├── src/lib/api.ts      # Axios client + JWT refresh interceptor
-│   └── package.json
-└── shopflow.postman_collection.json
-```
+
+**Backend** (Spring Boot 3.4.13)
+- `src/main/java/org/example/controller/` — 8 REST controllers, 35 endpoints
+- `src/main/java/org/example/service/` — 8 business logic services
+- `src/main/java/org/example/repository/` — JPA repositories + ProductSpecifications
+- `src/main/java/org/example/entity/` — 12 JPA entities
+- `src/main/java/org/example/dto/` — Request/Response DTOs
+- `src/main/java/org/example/mapper/` — MapStruct mappers
+- `src/main/java/org/example/security/` — JWT, authentication filter
+- `src/main/java/org/example/config/` — SecurityConfig, CORS, OpenAPI
+- `src/main/java/org/example/exception/` — Global error handling
+- `src/main/resources/application.yml` — Dev (H2) / Prod (PostgreSQL) profiles
+- `src/main/resources/data.sql` — Demo data seeding
+- `pom.xml` — Maven build with dependency management
+
+**Frontend** (Next.js 16 + TypeScript)
+- `src/app/` — 11 routes (App Router)
+- `src/components/` — Reusable UI components (ProductCard, Navbar, etc.)
+- `src/lib/api.ts` — Axios client + JWT refresh interceptor
+- `package.json` — Dependencies & scripts
+
+**Root**
+- `shopflow.postman_collection.json` — 20 API requests with variables
 
 ### Data Flow — Order Creation
 1. Client (Next.js) → POST `/api/orders` with Bearer token
