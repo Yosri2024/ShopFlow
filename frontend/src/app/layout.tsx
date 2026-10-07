@@ -40,10 +40,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div>
               <div className="font-semibold text-white mb-3">Vendre</div>
               <div className="space-y-2 text-xs" style={{ color: "#94A3B8" }}>
-                <a href="/seller" className="block hover:text-white transition">Tableau vendeur</a>
+                
                 <a href="/register" className="block hover:text-white transition">Devenir vendeur</a>
                 <a href="/cgu" className="block hover:text-white transition">Frais & CGU vendeur</a>
-                <a href="/swagger-ui.html" className="block hover:text-white transition">API Docs</a>
+                <a href="http://localhost:8080/swagger-ui.html" target="_blank" rel="noopener noreferrer" className="block hover:text-white transition">API Docs</a>
               </div>
             </div>
             <div>

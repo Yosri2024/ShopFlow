@@ -87,7 +87,6 @@ export default function Checkout() {
             <span className="px-3 py-1 rounded-full border" style={{borderColor:"#CCFBF1", background:"#F0FDFA", color:"#0F172A"}}>{res.paiement || paiement}</span>
             <span className="px-3 py-1 rounded-full" style={{background:"#0F172A", color:"white"}}>{res.adresseLivraison}</span>
           </div>
-          <pre className="mt-3 p-3 rounded-xl text-xs overflow-auto text-left" style={{ background: "#0F172A", color: "#F0FDFA", border: "1px solid #0D9488" }}>{JSON.stringify(res,null,2)}</pre>
           <a href="/orders" className="block mt-4 text-center py-3 rounded-full font-medium" style={{ background: "#0D9488", color: "#FFFFFF" }}>Voir mes commandes</a>
         </motion.div>
       )}

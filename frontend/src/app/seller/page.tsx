@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 export const dynamic = "force-dynamic";
 import { useSearchParams } from "next/navigation";
 import api from "@/lib/api";
@@ -11,6 +12,7 @@ import { Package, ShoppingBag, LayoutDashboard, Plus, Eye, Truck, CheckCircle } 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export default function Seller() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialTab = (searchParams.get("tab") as "dashboard"|"produits"|"commandes") || "dashboard";
   const [tab, setTab] = useState<"dashboard"|"produits"|"commandes">(initialTab);
@@ -20,6 +22,16 @@ export default function Seller() {
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState({ nom:"", prix:"", stock:"", description:"", categorie:"1" });
   const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    const role = localStorage.getItem("role");
+    if (!token || role !== "SELLER") {
+      router.push("/login");
+      return;
+    }
+    load();
+  }, [router]);
 
   const load = () => {
     api.get("/api/dashboard/seller").then(r=>setStats(r.data)).catch(()=>{});

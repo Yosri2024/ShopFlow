@@ -68,7 +68,7 @@ export default function Register() {
           <div>
             <label className="block text-xs font-medium mb-1" style={{color:"#334155"}}>Rôle</label>
             <select value={form.role} onChange={e=>setForm({...form,role:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm bg-white">
-              <option value="CUSTOMER">CUSTOMER - Client</option><option value="SELLER">SELLER - Vendeur</option><option value="ADMIN">ADMIN - Administrateur (démo via login)</option>
+              <option value="CUSTOMER">CUSTOMER - Client</option><option value="SELLER">SELLER - Vendeur</option>
             </select>
           </div>
           {form.role==="SELLER" && <div><label className="block text-xs font-medium mb-1" style={{color:"#334155"}}>Nom boutique</label><input placeholder="ex: ShopAli" value={form.nomBoutique} onChange={e=>setForm({...form,nomBoutique:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" /></div>}
