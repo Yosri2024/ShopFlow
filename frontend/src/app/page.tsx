@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/ProductCard";
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cats, setCats] = useState<{id:number,nom:string}[]>([]);
+  const [totalProducts, setTotalProducts] = useState(0);
   const [loading, setLoading] = useState(true);
   const [categorie, setCategorie] = useState("");
   const [promo, setPromo] = useState(false);
@@ -31,7 +32,7 @@ export default function Home() {
   useEffect(() => { setRole(localStorage.getItem("role")); }, []);
   useEffect(() => {
     Promise.all([
-      api.get("/api/products?page=0&size=8").then(r => setProducts(r.data.content || r.data)),
+      api.get("/api/products?page=0&size=8").then(r => { setProducts(r.data.content || r.data); setTotalProducts(r.data.totalElements || (r.data.content ? r.data.content.length : r.data.length)); }),
       api.get("/api/categories").then(r => setCats(r.data)).catch(()=>{})
     ]).finally(()=>setLoading(false));
   }, []);
@@ -51,7 +52,7 @@ export default function Home() {
     <div>
       <div className="text-white py-14 px-6 text-center" style={{ background: "#0F172A" }}>
         <h1 className="text-4xl font-bold tracking-tight mb-2">ShopFlow</h1>
-        <p className="text-zinc-300">Marketplace B2C avec 9 produits et livraison rapide</p>
+        <p className="text-zinc-300">Marketplace B2C avec {totalProducts > 100 ? "+100" : totalProducts} produits et livraison rapide</p>
         <a href="/products" className="inline-block mt-5 px-7 py-2.5 rounded-full font-bold" style={{ background: "#FFFFFF", color: "#0F172A" }}>Voir catalogue</a>
         {role === "SELLER" && (
           <div className="mt-6 flex justify-center gap-2 flex-wrap">
@@ -68,7 +69,7 @@ export default function Home() {
         )}
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-6 bg-white border-2 rounded-2xl p-4 space-y-3 shadow-sm" style={{ borderColor: "#0D9488", boxShadow: "0 4px 16px rgba(13,148,136,0.12)" }}>
+      <div className="max-w-6xl mx-auto px-6 py-6 bg-white border-2 rounded-2xl p-4 space-y-3 shadow-sm mt-8" style={{ borderColor: "#0D9488", boxShadow: "0 4px 16px rgba(13,148,136,0.12)" }}>
         <div className="flex gap-2 flex-wrap">
         <button onClick={()=>{
           const nc = categorie==="1" ? "" : "1";
@@ -87,7 +88,7 @@ export default function Home() {
         }} className="px-4 py-2 rounded-full border text-sm font-medium transition hover:shadow-sm" style={promo ? { background: "#F59E0B", color: "#1F2937", borderColor: "#F59E0B", boxShadow: "0 2px 8px rgba(245,158,11,0.3)" } : { background: "#FFFFFF", borderColor: "#F59E0B", color: "#B45309" }}>En promo</button>
           {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer filtre(s)</button>}
         </div>
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-wrap mt-4">
           <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border-2 px-4 py-2 rounded-full text-sm flex-1 min-w-[160px] outline-none" style={{ borderColor: "#0D9488", background: "#FFFFFF" }} />
           <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border-2 px-4 py-2 rounded-full text-sm w-32 outline-none" style={{ borderColor: "#0D9488", background: "#FFFFFF" }} />
           <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border-2 px-4 py-2 rounded-full text-sm w-32 outline-none" style={{ borderColor: "#0D9488", background: "#FFFFFF" }} />

@@ -58,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
           <div className="border-t" style={{ borderColor: "#1E293B" }}>
             <div className="max-w-6xl mx-auto px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-2 text-xs" style={{ color: "#64748B" }}>
-              <span>ShopFlow © 2026 — yosri • B2C Marketplace • Spring Boot + Next.js</span>
+              <span>ShopFlow © 2026 — B2C Marketplace</span>
               <span className="flex items-center gap-3"><span className="px-2 py-1 rounded-full text-[10px] border" style={{ borderColor: "#334155", color: "#94A3B8" }}>Livraison 48h</span><span className="px-2 py-1 rounded-full text-[10px] border" style={{ borderColor: "#334155", color: "#94A3B8" }}>Paiement sécurisé</span></span>
             </div>
           </div>
