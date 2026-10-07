@@ -17,9 +17,9 @@ export default function Orders() {
     <div className="max-w-3xl mx-auto px-6 py-6">
       <h1 className="text-2xl font-bold mb-4">Mes commandes</h1>
       {msg && <div className="mb-3 text-sm border rounded p-2">{msg}</div>}
-      {orders.length===0 ? <div className="bg-white border rounded-xl p-10 text-center text-zinc-500">Aucune commande</div> :
+      {orders.length===0 ? <div className="bg-white border-2 rounded-xl p-10 text-center text-zinc-500" style={{ borderColor: "#0D9488" }}>Aucune commande</div> :
        orders.map(o=> (
-         <div key={o.id} className="bg-white border rounded-xl p-4 mb-3">
+         <div key={o.id} className="bg-white border-2 rounded-xl p-4 mb-3" style={{ borderColor: "#0D9488" }}>
            <div className="flex justify-between"><span className="font-mono text-sm">{o.numeroCommande}</span><OrderStatusBadge s={o.statut} /></div>
            <div className="text-sm text-zinc-500">{new Date(o.dateCommande).toLocaleString()} - {o.totalTTC} €</div>
            <div className="text-xs mt-1">{o.lignes.map(l=> `${l.productNom} x ${l.quantite}`).join(", ")}</div>

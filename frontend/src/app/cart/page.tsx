@@ -39,11 +39,11 @@ export default function Panier() {
       <div className="max-w-3xl mx-auto px-6 py-6">
         <h1 className="text-2xl font-bold mb-4">Panier {cart.lignes.length===0 && "(vide)"}</h1>
         {cart.lignes.length===0 ? (
-          <div className="bg-white border rounded-2xl p-10 text-center text-zinc-500">Ton panier est vide. <a href="/products" className="underline">Voir catalogue</a></div>
+          <div className="bg-white border-2 rounded-2xl p-10 text-center text-zinc-500" style={{ borderColor: "#0D9488" }}>Ton panier est vide. <a href="/products" className="underline">Voir catalogue</a></div>
         ) : (
           <div className="space-y-3">
             {cart.lignes.map(l=> (
-              <motion.div key={l.id} initial={{ opacity:0, x:-10 }} animate={{ opacity:1, x:0 }} className="flex items-center justify-between bg-white border rounded-xl p-4 shadow-sm">
+              <motion.div key={l.id} initial={{ opacity:0, x:-10 }} animate={{ opacity:1, x:0 }} className="flex items-center justify-between bg-white border-2 rounded-xl p-4 shadow-sm" style={{ borderColor: "#0D9488" }}>
                 <div className="flex-1">
                   <div className="font-medium">{l.productNom}</div>
                   <div className="text-sm text-zinc-500">{l.prixUnitaire} €</div>
@@ -60,7 +60,7 @@ export default function Panier() {
         )}
 
         {/* Sticky total */}
-        <div className="mt-6 sticky bottom-4 bg-white border rounded-2xl p-4 shadow-lg space-y-2">
+        <div className="mt-6 sticky bottom-4 bg-white border-2 rounded-2xl p-4 shadow-lg space-y-2" style={{ borderColor: "#0D9488" }}>
           <div className="flex justify-between text-sm"><span>Sous-total</span><span>{cart.sousTotal} €</span></div>
           <div className="flex justify-between text-sm"><span>Livraison</span><span>{cart.fraisLivraison} €</span></div>
           <div className="flex justify-between font-bold text-lg border-t pt-2"><span>Total TTC</span><span>{cart.totalTTC} €</span></div>
@@ -68,11 +68,11 @@ export default function Panier() {
         </div>
 
         <div className="flex gap-2 mt-4">
-          <div className="flex-1 flex gap-2 bg-white border rounded-full p-1" style={{ borderColor: "#CCFBF1" }}>
+          <div className="flex-1 flex gap-2 bg-white border-2 rounded-full p-1" style={{ borderColor: "#0D9488" }}>
             <input placeholder="Code promo" value={code} onChange={e=>setCode(e.target.value)} className="flex-1 px-3 py-1 text-sm outline-none bg-transparent" />
             <button onClick={applyCoupon} className="px-4 py-1.5 rounded-full text-sm font-medium transition" style={{ background: "#0D9488", color: "#FFFFFF" }}>Appliquer</button>
           </div>
-          <button onClick={async()=>{await api.delete("/api/cart/coupon"); load();}} className="border px-4 rounded-full text-sm hover:bg-zinc-50" style={{ borderColor: "#CCFBF1" }}>Retirer</button>
+          <button onClick={async()=>{await api.delete("/api/cart/coupon"); load();}} className="border-2 px-4 rounded-full text-sm hover:bg-zinc-50" style={{ borderColor: "#0D9488" }}>Retirer</button>
         </div>
 
         {cart.lignes.length>0 && (

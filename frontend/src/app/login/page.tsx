@@ -30,16 +30,16 @@ export default function Login() {
 
   return (
     <div className="max-w-md mx-auto px-6 py-10">
-      <motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} className="bg-white border rounded-2xl p-6 shadow-sm">
+      <motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} className="bg-white border-2 rounded-2xl p-6 shadow-sm" style={{ borderColor: "#0D9488" }}>
         <h1 className="text-xl font-bold mb-1">Connexion</h1>
         <p className="text-sm text-zinc-500 mb-4">Accede a ton panier et commandes</p>
         <div className="space-y-3">
           <div>
-            <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="email" className={`w-full border px-3 py-2.5 rounded-xl text-sm ${!validEmail && email ? "border-red-300" : "border-zinc-200"}`} />
+            <input value={email} onChange={e=>setEmail(e.target.value)} placeholder="email" className={`w-full border-2 px-3 py-2.5 rounded-xl text-sm ${!validEmail && email ? "border-red-300" : "border-[#0D9488]"}`} />
             {!validEmail && email && <div className="text-xs text-red-500 mt-1">Email invalide</div>}
           </div>
           <div className="relative">
-            <input type={show ? "text" : "password"} value={password} onChange={e=>setPassword(e.target.value)} placeholder="mot de passe" className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm pr-10" />
+            <input type={show ? "text" : "password"} value={password} onChange={e=>setPassword(e.target.value)} placeholder="mot de passe" className="w-full border-2 border-[#0D9488] px-3 py-2.5 rounded-xl text-sm pr-10" />
             <button type="button" onClick={()=>setShow(!show)} className="absolute right-3 top-2.5 text-zinc-400">{show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}</button>
           </div>
           <motion.button whileTap={{ scale:0.98 }} onClick={login} disabled={loading || !validEmail || !validPass} className="w-full py-2.5 rounded-full font-medium disabled:opacity-50 flex items-center justify-center gap-2" style={{ background: loading || !validEmail || !validPass ? "#CBD5E1" : "#0D9488", color: "#FFFFFF" }}>

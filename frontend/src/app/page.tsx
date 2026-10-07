@@ -68,7 +68,7 @@ export default function Home() {
         )}
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-6 bg-white border rounded-2xl p-4 space-y-3 shadow-sm" style={{ borderColor: "#CCFBF1", boxShadow: "0 4px 16px rgba(13,148,136,0.08)" }}>
+      <div className="max-w-6xl mx-auto px-6 py-6 bg-white border-2 rounded-2xl p-4 space-y-3 shadow-sm" style={{ borderColor: "#0D9488", boxShadow: "0 4px 16px rgba(13,148,136,0.12)" }}>
         <div className="flex gap-2 flex-wrap">
         <button onClick={()=>{
           const nc = categorie==="1" ? "" : "1";
@@ -88,10 +88,10 @@ export default function Home() {
           {(categorie || promo) && <button onClick={()=>{setCategorie(""); setPromo(false); fetchProducts("", false);}} className="px-3 py-1.5 rounded-full text-xs border" style={{ borderColor: "#FECACA", color: "#DC2626", background: "#FFFFFF" }}>Effacer filtre(s)</button>}
         </div>
         <div className="flex gap-2 flex-wrap">
-          <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border px-4 py-2 rounded-full text-sm flex-1 min-w-[160px] outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF" }} />
-          <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-32 outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF" }} />
-          <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border px-4 py-2 rounded-full text-sm w-32 outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF" }} />
-          <select value={tri} onChange={e=>setTri(e.target.value)} className="border px-3 py-2 rounded-full text-sm outline-none" style={{ borderColor: "#CCFBF1", background: "#FFFFFF", color: "#0F172A" }}>
+          <input placeholder="Recherche..." value={q} onChange={e=>setQ(e.target.value)} className="border-2 px-4 py-2 rounded-full text-sm flex-1 min-w-[160px] outline-none" style={{ borderColor: "#0D9488", background: "#FFFFFF" }} />
+          <input placeholder="Prix min" type="number" value={prixMin} onChange={e=>setPrixMin(e.target.value)} className="border-2 px-4 py-2 rounded-full text-sm w-32 outline-none" style={{ borderColor: "#0D9488", background: "#FFFFFF" }} />
+          <input placeholder="Prix max" type="number" value={prixMax} onChange={e=>setPrixMax(e.target.value)} className="border-2 px-4 py-2 rounded-full text-sm w-32 outline-none" style={{ borderColor: "#0D9488", background: "#FFFFFF" }} />
+          <select value={tri} onChange={e=>setTri(e.target.value)} className="border-2 px-3 py-2 rounded-full text-sm outline-none" style={{ borderColor: "#0D9488", background: "#FFFFFF", color: "#0F172A" }}>
             <option value="">Trier par</option>
             <option value="nom,asc">A - Z</option>
             <option value="nom,desc">Z - A</option>
@@ -106,7 +106,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto px-6 pb-10 mt-6">
         <h2 className="text-xl font-semibold mb-4" style={{ color: "#0F172A" }}>Produits en vedette</h2>
         {products.length===0 ? (
-          <div className="bg-white border rounded-2xl p-10 text-center" style={{ borderColor: "#E5E7EB", color: "#64748B" }}>Aucun produit</div>
+          <div className="bg-white border-2 rounded-2xl p-10 text-center" style={{ borderColor: "#0D9488", color: "#64748B" }}>Aucun produit</div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-fr">
             {products.map((p)=> <div key={p.id} className="h-full"><ProductCard p={p} /></div>)}

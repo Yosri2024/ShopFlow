@@ -34,15 +34,15 @@ export default function Checkout() {
       </div>
 
       {step===1 && (
-        <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} className="bg-white border rounded-2xl p-6 shadow-sm">
+        <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} className="bg-white border-2 rounded-2xl p-6 shadow-sm" style={{ borderColor: "#0D9488" }}>
           <h2 className="font-semibold mb-3 flex items-center gap-2" style={{ color: "#0F172A" }}><MapPin className="w-4 h-4" style={{ color: "#0D9488" }} /> Adresse livraison</h2>
-          <input value={adresse} onChange={e=>setAdresse(e.target.value)} className="w-full border rounded-xl px-3 py-3 text-sm focus:ring-2 outline-none" style={{ borderColor: "#CCFBF1", background: "#F0FDFA" }} />
+          <input value={adresse} onChange={e=>setAdresse(e.target.value)} className="w-full border-2 rounded-xl px-3 py-3 text-sm focus:ring-2 outline-none" style={{ borderColor: "#0D9488", background: "#F0FDFA" }} />
           <button onClick={()=>setStep(2)} className="w-full mt-4 py-3 rounded-full font-medium transition" style={{ background: "#0D9488", color: "#FFFFFF" }}>Continuer vers paiement</button>
         </motion.div>
       )}
 
       {step===2 && (
-        <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} className="bg-white border rounded-2xl p-6 shadow-sm">
+        <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} className="bg-white border-2 rounded-2xl p-6 shadow-sm" style={{ borderColor: "#0D9488" }}>
           <h2 className="font-semibold mb-3 flex items-center gap-2"><CreditCard className="w-4 h-4" style={{color:"#0D9488"}} /> Mode de paiement</h2>
           <p className="text-sm text-zinc-500 mb-3">Choisis comment tu veux payer. Aucun prélèvement réel (PENDING).</p>
           <div className="grid grid-cols-2 gap-3 mb-4">
@@ -72,14 +72,14 @@ export default function Checkout() {
             <span className="font-bold" style={{color:"#0F172A"}}>{paiement === "ESPECE" ? "Paiement à la livraison" : paiement}</span>
           </div>
           <div className="flex gap-2 mt-4">
-            <button onClick={()=>setStep(1)} className="flex-1 border py-3 rounded-full font-medium" style={{ borderColor: "#CCFBF1", background: "#FFFFFF", color: "#0F172A" }}>Retour</button>
+            <button onClick={()=>setStep(1)} className="flex-1 border-2 py-3 rounded-full font-medium" style={{ borderColor: "#0D9488", background: "#FFFFFF", color: "#0F172A" }}>Retour</button>
             <button onClick={commander} className="flex-1 py-3 rounded-full font-bold shadow-sm" style={{ background: "#0F172A", color: "#FFFFFF" }}>Confirmer commande — {paiement === "ESPECE" ? "Espèce" : paiement === "PAYPAL" ? "PayPal" : paiement}</button>
           </div>
         </motion.div>
       )}
 
       {step===3 && res && (
-        <motion.div initial={{ scale:0.97, opacity:0 }} animate={{ scale:1, opacity:1 }} className="bg-white border rounded-2xl p-6 shadow-sm text-center">
+        <motion.div initial={{ scale:0.97, opacity:0 }} animate={{ scale:1, opacity:1 }} className="bg-white border-2 rounded-2xl p-6 shadow-sm text-center" style={{ borderColor: "#0D9488" }}>
           <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3"><Check className="w-6 h-6" /></div>
           <h3 className="font-bold">Commande {res.numeroCommande}</h3>
           <p className="text-sm text-zinc-500">{res.statut} - {res.totalTTC} € — Paiement: {res.paiement || paiement}</p>

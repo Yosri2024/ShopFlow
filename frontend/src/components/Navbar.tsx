@@ -6,7 +6,7 @@ export function Navbar() {
   const [role, setRole] = useState<string | null>(null);
   useEffect(() => { setAuth(!!localStorage.getItem("accessToken")); setRole(localStorage.getItem("role")); }, []);
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b px-6 py-3 flex items-center justify-between" style={{ borderColor: "#CCFBF1", boxShadow: "0 2px 12px rgba(13,148,136,0.08)" }}>
+    <nav className="sticky top-0 z-50 bg-white border-b px-6 py-3 flex items-center justify-between" style={{ borderColor: "#0D9488", borderWidth: "2px", boxShadow: "0 2px 12px rgba(13,148,136,0.15)" }}>
       <a href="/" className="font-bold text-xl" style={{ color: "#0F172A", fontFamily: "var(--font-poppins)" }}>ShopFlow</a>
       <div className="flex gap-2 text-sm items-center">
         {!auth ? (

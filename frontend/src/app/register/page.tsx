@@ -31,7 +31,7 @@ export default function Register() {
 
   return (
     <div className="max-w-md mx-auto px-6 py-10">
-      <motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} className="bg-white border rounded-2xl p-6 shadow-sm">
+      <motion.div initial={{ opacity:0, y:10 }} animate={{ opacity:1, y:0 }} className="bg-white border-2 rounded-2xl p-6 shadow-sm" style={{ borderColor: "#0D9488" }}>
         <h1 className="text-xl font-bold mb-1">Creation compte</h1>
         <div className="flex gap-2 mb-4 text-sm">
           <a href="/login" className="flex-1 py-2 text-center border rounded-full">Se connecter</a>
@@ -40,12 +40,12 @@ export default function Register() {
         <div className="space-y-3">
           <div>
             <label className="block text-xs font-medium mb-1" style={{color:"#334155"}}>Email</label>
-            <input placeholder="ex: yosri@example.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />
+            <input placeholder="ex: yosri@example.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})} className="w-full border-2 border-[#0D9488] px-3 py-2.5 rounded-xl text-sm" />
           </div>
           <div>
             <label className="block text-xs font-medium mb-1" style={{color:"#334155"}}>Mot de passe</label>
             <div className="relative">
-              <input placeholder="8+ chars, majuscule, chiffre, symbole" type={show ? "text" : "password"} value={form.password} onChange={e=>setForm({...form,password:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm pr-10" />
+              <input placeholder="8+ chars, majuscule, chiffre, symbole" type={show ? "text" : "password"} value={form.password} onChange={e=>setForm({...form,password:e.target.value})} className="w-full border-2 border-[#0D9488] px-3 py-2.5 rounded-xl text-sm pr-10" />
               <button type="button" onClick={()=>setShow(!show)} className="absolute right-3 top-2.5 text-zinc-400">{show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}</button>
             </div>
           </div>
@@ -58,20 +58,20 @@ export default function Register() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-medium mb-1" style={{color:"#334155"}}>Prénom</label>
-              <input placeholder="ex: Yosri" value={form.prenom} onChange={e=>setForm({...form,prenom:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />
+              <input placeholder="ex: Yosri" value={form.prenom} onChange={e=>setForm({...form,prenom:e.target.value})} className="w-full border-2 border-[#0D9488] px-3 py-2.5 rounded-xl text-sm" />
             </div>
             <div>
               <label className="block text-xs font-medium mb-1" style={{color:"#334155"}}>Nom</label>
-              <input placeholder="ex: Dkhil" value={form.nom} onChange={e=>setForm({...form,nom:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" />
+              <input placeholder="ex: Dkhil" value={form.nom} onChange={e=>setForm({...form,nom:e.target.value})} className="w-full border-2 border-[#0D9488] px-3 py-2.5 rounded-xl text-sm" />
             </div>
           </div>
           <div>
             <label className="block text-xs font-medium mb-1" style={{color:"#334155"}}>Rôle</label>
-            <select value={form.role} onChange={e=>setForm({...form,role:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm bg-white">
+            <select value={form.role} onChange={e=>setForm({...form,role:e.target.value})} className="w-full border-2 border-[#0D9488] px-3 py-2.5 rounded-xl text-sm bg-white">
               <option value="CUSTOMER">CUSTOMER - Client</option><option value="SELLER">SELLER - Vendeur</option>
             </select>
           </div>
-          {form.role==="SELLER" && <div><label className="block text-xs font-medium mb-1" style={{color:"#334155"}}>Nom boutique</label><input placeholder="ex: ShopAli" value={form.nomBoutique} onChange={e=>setForm({...form,nomBoutique:e.target.value})} className="w-full border border-zinc-200 px-3 py-2.5 rounded-xl text-sm" /></div>}
+          {form.role==="SELLER" && <div><label className="block text-xs font-medium mb-1" style={{color:"#334155"}}>Nom boutique</label><input placeholder="ex: ShopAli" value={form.nomBoutique} onChange={e=>setForm({...form,nomBoutique:e.target.value})} className="w-full border-2 border-[#0D9488] px-3 py-2.5 rounded-xl text-sm" /></div>}
           <motion.button whileTap={{ scale:0.98 }} onClick={register} disabled={!valid} className="w-full py-2.5 rounded-full font-bold shadow-sm disabled:opacity-50 transition" style={{ background: !valid ? "#E2E8F0" : "#0F172A", color: !valid ? "#64748B" : "#FFFFFF", boxShadow: !valid ? "none" : "0 4px 12px rgba(15,23,42,0.25)" }}>Créer compte</motion.button>
         </div>
         {msg && <div className={`mt-3 text-sm border rounded-xl p-3 break-all flex items-center gap-2 ${msg.includes("cree") ? "bg-emerald-50 border-emerald-200 text-emerald-700" : "bg-red-50 border-red-200 text-red-600"}`}>{!msg.includes("cree") && <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />}<span>{msg}</span></div>}

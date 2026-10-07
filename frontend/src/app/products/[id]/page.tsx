@@ -73,7 +73,7 @@ export default function FicheProduit() {
             {p.variants?.length>0 && (
               <div className="mt-4">
                 <div className="text-sm font-medium mb-2">Variantes</div>
-                <select value={selectedVariant ?? ""} onChange={e=>setSelectedVariant(e.target.value? Number(e.target.value): null)} className="w-full border rounded-xl px-3 py-2 text-sm bg-white">
+                <select value={selectedVariant ?? ""} onChange={e=>setSelectedVariant(e.target.value? Number(e.target.value): null)} className="w-full border-2 rounded-xl px-3 py-2 text-sm bg-white" style={{ borderColor: "#0D9488" }}>
                   <option value="">Choisir variante</option>
                   {p.variants.map(v=> <option key={v.id} value={v.id}>{v.attribut}: {v.valeur} {v.prixDelta ? `(+${v.prixDelta} €)` : ""}</option>)}
                 </select>
@@ -81,7 +81,7 @@ export default function FicheProduit() {
             )}
 
             <div className="flex items-center gap-3 mt-6">
-              <div className="flex items-center border rounded-full">
+              <div className="flex items-center border-2 rounded-full" style={{ borderColor: "#0D9488" }}>
                 <button onClick={()=>setQty(Math.max(1, qty-1))} className="w-9 h-9 flex items-center justify-center hover:bg-zinc-50 rounded-l-full"><Minus className="w-4 h-4" /></button>
                 <span className="w-10 text-center font-medium">{qty}</span>
                 <button onClick={()=>setQty(qty+1)} className="w-9 h-9 flex items-center justify-center hover:bg-zinc-50 rounded-r-full"><Plus className="w-4 h-4" /></button>
@@ -95,7 +95,7 @@ export default function FicheProduit() {
             <div className="mt-8 border-t pt-6">
               <h3 className="font-semibold mb-2">Avis clients</h3>
               {reviews.length===0 ? <p className="text-sm text-zinc-500">Aucun avis. Achete puis laisse un avis 1 a 5.</p> :
-                reviews.map((r:any)=> <div key={r.id} className="border rounded-xl p-3 mb-2 bg-white"><div className="text-sm font-medium">{"★".repeat(r.note)} {r.note}/5</div><p className="text-sm text-zinc-600">{r.commentaire}</p></div>)}
+                reviews.map((r:any)=> <div key={r.id} className="border-2 rounded-xl p-3 mb-2 bg-white" style={{ borderColor: "#0D9488" }}><div className="text-sm font-medium">{"★".repeat(r.note)} {r.note}/5</div><p className="text-sm text-zinc-600">{r.commentaire}</p></div>)}
             </div>
           </div>
         </div>

@@ -46,8 +46,8 @@ export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
     <motion.div
       whileHover={{ scale: 1.02, y: -4 }}
       transition={{ duration: 0.2 }}
-      className="group relative bg-white rounded-2xl border shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
-      style={{ borderColor: "#CCFBF1", boxShadow: "0 4px 12px rgba(13,148,136,0.06)" }}
+      className="group relative bg-white rounded-2xl border-2 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full"
+      style={{ borderColor: "#0D9488", boxShadow: "0 4px 12px rgba(13,148,136,0.08)" }}
     >
       <AnimatePresence>
         {toast && (
@@ -128,7 +128,7 @@ export function ProductCard({ p, onQuickAdd }: ProductCardProps) {
         </div>
 
         {/* Actions - Uiverse type1 - pinned bottom */}
-        <div className="flex gap-2 pt-3 mt-auto border-t" style={{ borderColor: "#F0FDFA" }}>
+        <div className="flex gap-2 pt-3 mt-auto border-t" style={{ borderColor: "#CCFBF1", borderWidth: "2px" }}>
           <button
             onClick={handleQuickAdd}
             disabled={adding || p.stock === 0}
